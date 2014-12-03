@@ -74,7 +74,7 @@ int uartRx(bool block)
    while (pc_buffer_empty(&UART0_Rx_Buffer))
    {
       if (!block)
-         return 0;
+         return -1;
    }
 
    DisableInterrupts();
@@ -91,25 +91,30 @@ void uartTx(int data)
 {
 
   // If there is sapce in the hardwere FIFO, and the circular
-  // buffer is empty, send the data to the FIFO.
-	pc_buffer_empty(&UART0_Tx_Buffer);
-	if(!((UART0->FR & UART_FR_TXFF) == UART_FR_TXFF)){
-		UART0->DR = data;
-	}
-	
-
-  // else
+  // Queue is empty, send the data to the FIFO.
+  if( pc_buffer_empty(&UART0_Tx_Buffer) && !(UART0->FR & UART_FR_TXFF) )
+  {
+    UART0->DR = data;
+  }
+  else
+  {
     // Test to see if the circular buffer is full
     // If it is, we wait until there is space.
-	while(pc_buffer_full(&UART0_Tx_Buffer)){}
+    while( pc_buffer_full(&UART0_Tx_Buffer))
+    {
+        // wait
+    }
 
+    DisableInterrupts();
     // Add the character to the circular buffer
-	pc_buffer_add(&UART0_Tx_Buffer, data);
+    pc_buffer_add(&UART0_Tx_Buffer, (char) data);
+    EnableInterrupts();
+  }
 
   // If you're in this function, you want to send data
   // so enable TX interrupts even if they are already enabled.
-	UART0->IM = UART_IM_TXIM;
-		
+  UART0->IM |= UART_IM_TXIM;
+
   return;
 }
 

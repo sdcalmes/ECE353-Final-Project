@@ -22,7 +22,7 @@
 
 //*****************************************************************************
 // main.c
-// Author: jkrachey@wisc.edu
+// Author: jkrachey@wisc.edu, Sam Calmes, Frank Barry-Lenoch
 //*****************************************************************************
 #include <stdio.h>
 #include <stdint.h>

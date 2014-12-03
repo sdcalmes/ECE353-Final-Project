@@ -1,0 +1,15 @@
+.\obj\main.o: main.c
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdint.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\string.h
+.\obj\main.o: ../include/fonts.h
+.\obj\main.o: ../include/eadogs102w.h
+.\obj\main.o: ../include/spi.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdbool.h
+.\obj\main.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123GH6PM.h
+.\obj\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include\core_cm4.h
+.\obj\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include\core_cmInstr.h
+.\obj\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include\core_cmFunc.h
+.\obj\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include\core_cm4_simd.h
+.\obj\main.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h
+.\obj\main.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h

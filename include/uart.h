@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include "TM4C123GH6PM.h"
+#include "../include/sysctrl.h"
 #include "../include/circular_buffer.h"
 
 // SysCtrl UART Masks

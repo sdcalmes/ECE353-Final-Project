@@ -501,6 +501,71 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>includes</GroupName>
+          <Files>
+            <File>
+              <FileName>adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>eadogs102w.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\eadogs102w.h</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\fonts.h</FilePath>
+            </File>
+            <File>
+              <FileName>gptimer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\gptimer.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>ledMatrixChars.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\ledMatrixChars.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcp24LC32AT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\mcp24LC32AT.h</FilePath>
+            </File>
+            <File>
+              <FileName>nordic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\nordic.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sysctrl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\sysctrl.h</FilePath>
+            </File>
+            <File>
+              <FileName>systick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\systick.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\include\uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Device</GroupName>
           <Files>
             <File>

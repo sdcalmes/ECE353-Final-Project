@@ -1,5 +1,4 @@
 #include "../include/uart.h" 
-
 #include "pc_buffer.h"
 
 #define UART0_BUFFER_SIZE 80

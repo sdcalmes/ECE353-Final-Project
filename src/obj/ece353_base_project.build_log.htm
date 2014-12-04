@@ -2,8 +2,287 @@
 <body>
 <pre>
 <h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.12.0.0
+Copyright (C) 2014 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: sam calmes, uw madison, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.12.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 (build 41)
+Assembler:       Armasm.exe V5.05 (build 41)
+Linker/Locator:  ArmLink.exe V5.05 (build 41)
+Library Manager: ArmAr.exe V5.05 (build 41)
+Hex Converter:   FromElf.exe V5.05 (build 41)
+CPU DLL:         SARMCM3.DLL V5.12.0.0
+Dialog DLL:      DCM.DLL V1.13.0.0
+Target DLL:      lmidk-agdi.dll V???
+Dialog DLL:      TCM.DLL V1.14.2.0
+ 
 <h2>Project:</h2>
-E:\Documents\GitHub\ECE353-Final-Project\src\ece353_base_project.uvprojx
-Project File Date:  12/02/2014
+C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\ece353_base_project.uvprojx
+Project File Date:  12/03/2014
 
 <h2>Output:</h2>
+Rebuild target 'Target 1'
+compiling main.c...
+compiling fonts.c...
+compiling adc.c...
+compiling gpioPort.c...
+compiling interrupts.c...
+compiling pc_buffer.c...
+compiling spi.c...
+compiling uart.c...
+compiling watchdog.c...
+compiling wireless.c...
+compiling boardUtil.c...
+boardUtil.c(35): warning:  #223-D: function "uart0_init_115K" declared implicitly
+    uart0_init_115K();
+boardUtil.c: 1 warning, 0 errors
+assembling startup_TM4C123.s...
+compiling system_TM4C123.c...
+linking...
+Program Size: Code=2492 RO-data=652 RW-data=16 ZI-data=4288  
+".\obj\ece353_base_project.axf" - 0 Error(s), 1 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack
+                ARM::CMSIS:CORE:3.40.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 3.40.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.TM4C_DFP.1.0.0.pack
+                Keil::Device:Startup:1.0.0
+                Texas Instruments Tiva C Series Device Support and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\RTE
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
+Load "C:\\Users\\calmes\\Documents\\GitHub\\ECE353-Final-Project\\src\\obj\\ece353_base_project.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+</pre>
+</body>
+</html>
+_115K();
+boardUtil.c: 1 warning, 0 errors
+assembling startup_TM4C123.s...
+compiling system_TM4C123.c...
+".\obj\ece353_base_project.axf" - 12 Error(s), 2 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack
+                ARM::CMSIS:CORE:3.40.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 3.40.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.TM4C_DFP.1.0.0.pack
+                Keil::Device:Startup:1.0.0
+                Texas Instruments Tiva C Series Device Support and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\RTE
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
+Target not created.
+d_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): error:  #7: unrecognized token
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(3): warning:  #1331-D: null (zero) character in input line ignored
+     \013  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`  \001`__asm___12_eadogs102w_c_b1d2efe7____REV16 __asm___12_eadogs102w_c_b1d2efe7____REVSH lcd_set_pin_config lcd_initialize lcd_set_page lcd_set_column lcd_write_data lcd_write_char_8pts lcd_write_char_10pts lcd_clear lcd_write_string_10pts 
+../lib/ece353_project.lib(4): error:  #7: unrecognized token
+  eadogs102w.o/   1416595669  0     0     100666  85192     `
+../lib/ece353_project.lib(5): error:  #7: unrecognized token
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): error:  #7: unrecognized token
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): error:  #7: unrecognized token
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): error:  #7: unrecognized token
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): warning:  #1331-D: null (zero) character in input line ignored
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+../lib/ece353_project.lib(5): error:  #7: unrecognized token
+  ÷ORC\001\001\001         \001 \010 \001           À;\001    \0054     ( m j \002   \010   @ºpGÀºpG0µ\003œäM(`i`*rë`,t0½|µàH h(±ßH@h\020±İHÀh\010¹  |½ÛHEhÄhÕøü\003ØI  z\010CÅøü\003Ôøü\003ÕI  |ˆCÄøü\003@ \001ÑIkF\001"\010h\001©ÿ÷şÿ¡ \001ÍIkF\001"\010h\001©ÿ÷şÿÀ \001ÈIkF\001"\010h\001©ÿ÷şÿ¤ \001ÄIkF\001"\010h\001©ÿ÷şÿ¦ \001¿IkF\001"\010h\001©ÿ÷şÿ¢ \001»IkF\001"\010h\001©ÿ÷şÿ/ \001¶IkF\001"\010h\001©ÿ÷şÿ' \001²IkF\001"\010h\001©ÿ÷şÿ \001­IkF\001"\010h\001©ÿ÷şÿ\020 \001©IkF\001"\010h\001©ÿ÷şÿú \001¤IkF\001"\010h\001©ÿ÷şÿ \001 IkF\001"\010h\001©ÿ÷şÿ¯ \001›IkF\001"\010h\001©ÿ÷şÿÔøü\003—I    |\010CÄøü\003\001 oç|µ\005F’H h\020±‘HÀh\010¹  |½HÄhÔøü\003ŒI  |ˆCÄøü\003Eğ° \001ˆIkF\001"\010h\001©ÿ÷şÿÔøü\003„I     |\010CÄøü\003\001 âç|µ\005F\177H h\020±~HÀh\010¹  |½{HÄhÔøü\003yI       |ˆCÄøü\003\005ğ\017 \001uIkF\001"\010h\001©ÿ÷şÿ\020 @ê\025\020\001pIkF\001"\010h\001©ÿ÷şÿÔøü\003kI    |\010CÄøü\003\001 ×ç\021µ°gH h\020±eHÀh\010¹  \034½cHÄhÔøü\003aI       |\010CÄøü\003^IkF\001"\010h\001©ÿ÷şÿ\001 ìç-éğA€
+uart.c: 45 warnings, 30 errors
+compiling watchdog.c...
+compiling wireless.c...
+assembling startup_TM4C123.s...
+compiling system_TM4C123.c...
+".\obj\ece353_base_project.axf" - 30 Error(s), 46 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack
+                ARM::CMSIS:CORE:3.40.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 3.40.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.TM4C_DFP.1.0.0.pack
+                Keil::Device:Startup:1.0.0
+                Texas Instruments Tiva C Series Device Support and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\RTE
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
+Target not created.

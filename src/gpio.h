@@ -1,16 +1,35 @@
-#ifndef __GPIO_PORT_F_H__
-#define __GPIO_PORT_F_H__
+// Copyright (c) 2014, Joe Krachey
+// All rights reserved.
+//
+// Redistribution and use in binary form, with or without modification, 
+// are permitted provided that the following conditions are met:
+//
+// 1. Redistributions in binary form must reproduce the above copyright 
+//    notice, this list of conditions and the following disclaimer in 
+//    the documentation and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR 
+// PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+// EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; 
+// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+// NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <stdbool.h>
+//*****************************************************************************
+// gpio.h
+// Author: jkrachey@wisc.edu
+//*****************************************************************************
+#ifndef __GPIO_H__
+#define __GPIO_H__
+
 #include <stdint.h>
-#include "TM4C123.h"
-#include "../include/sysctrl.h"
-
-#define GPIO_PORTD_LOCK_R       (*((volatile unsigned long *)0x40007520))
-#define GPIO_PORTD_CR_R         (*((volatile unsigned long *)0x40007524))
-#define GPIO_PORTF_LOCK_R       (*((volatile unsigned long *)0x40025520))
-#define GPIO_PORTF_CR_R         (*((volatile unsigned long *)0x40025524))
-  
+#include <stdbool.h>
+#include "TM4C123GH6PM.h"
 
 //*****************************************************************************
 //
@@ -100,10 +119,12 @@
 #define GPIO_PCTL_PB6_T0CCP0    0x07000000  // T0CCP0 on PB6
 #define GPIO_PCTL_PB5_M         0x00F00000  // PB5 mask
 #define GPIO_PCTL_PB5_SSI2FSS   0x00200000  // SSI2FSS on PB5
+#define GPIO_PCTL_PB5_M0PWM3    0x00400000  // Motion Control Module, PWM3
 #define GPIO_PCTL_PB5_T1CCP1    0x00700000  // T1CCP1 on PB5
 #define GPIO_PCTL_PB5_CAN0TX    0x00800000  // CAN0TX on PB5
 #define GPIO_PCTL_PB4_M         0x000F0000  // PB4 mask
 #define GPIO_PCTL_PB4_SSI2CLK   0x00020000  // SSI2CLK on PB4
+#define GPIO_PCTL_PB4_M0PWM2    0x00040000  // Motion Control Module, PWM2
 #define GPIO_PCTL_PB4_T1CCP0    0x00070000  // T1CCP0 on PB4
 #define GPIO_PCTL_PB4_CAN0RX    0x00080000  // CAN0RX on PB4
 #define GPIO_PCTL_PB3_M         0x0000F000  // PB3 mask
@@ -130,10 +151,12 @@
 #define GPIO_PCTL_PC7_WT1CCP1   0x70000000  // WT1CCP1 on PC7
 #define GPIO_PCTL_PC6_M         0x0F000000  // PC6 mask
 #define GPIO_PCTL_PC6_U3RX      0x01000000  // U3RX on PC6
+#define GPIO_PCTL_PC6_PHB1      0x06000000  // PhB1 on PC6
 #define GPIO_PCTL_PC6_WT1CCP0   0x07000000  // WT1CCP0 on PC6
 #define GPIO_PCTL_PC5_M         0x00F00000  // PC5 mask
 #define GPIO_PCTL_PC5_U4TX      0x00100000  // U4TX on PC5
 #define GPIO_PCTL_PC5_U1TX      0x00200000  // U1TX on PC5
+#define GPIO_PCTL_PC5_PHA1      0x00600000  // PhA1 on PC5
 #define GPIO_PCTL_PC5_WT0CCP1   0x00700000  // WT0CCP1 on PC5
 #define GPIO_PCTL_PC5_U1CTS     0x00800000  // U1CTS on PC5
 #define GPIO_PCTL_PC4_M         0x000F0000  // PC4 mask
@@ -201,10 +224,12 @@
 #define GPIO_PCTL_PE5_M         0x00F00000  // PE5 mask
 #define GPIO_PCTL_PE5_U5TX      0x00100000  // U5TX on PE5
 #define GPIO_PCTL_PE5_I2C2SDA   0x00300000  // I2C2SDA on PE5
+#define GPIO_PCTL_PE5_M1PWM3    0x00500000  // Motion Control Module, PWM3
 #define GPIO_PCTL_PE5_CAN0TX    0x00800000  // CAN0TX on PE5
 #define GPIO_PCTL_PE4_M         0x000F0000  // PE4 mask
 #define GPIO_PCTL_PE4_U5RX      0x00010000  // U5RX on PE4
 #define GPIO_PCTL_PE4_I2C2SCL   0x00030000  // I2C2SCL on PE4
+#define GPIO_PCTL_PE4_M1PWM2    0x00050000  // Motion Control Module, PWM2
 #define GPIO_PCTL_PE4_CAN0RX    0x00080000  // CAN0RX on PE4
 #define GPIO_PCTL_PE3_M         0x0000F000  // PE3 mask
 #define GPIO_PCTL_PE2_M         0x00000F00  // PE2 mask
@@ -233,6 +258,7 @@
 #define GPIO_PCTL_PF1_M         0x000000F0  // PF1 mask
 #define GPIO_PCTL_PF1_U1CTS     0x00000010  // U1CTS on PF1
 #define GPIO_PCTL_PF1_SSI1TX    0x00000020  // SSI1TX on PF1
+#define GPIO_PCTL_PF1_PHB0      0x00000060  // PhB0 on PF1
 #define GPIO_PCTL_PF1_T0CCP1    0x00000070  // T0CCP1 on PF1
 #define GPIO_PCTL_PF1_C1O       0x00000090  // C1O on PF1
 #define GPIO_PCTL_PF1_TRD1      0x000000E0  // TRD1 on PF1
@@ -240,147 +266,236 @@
 #define GPIO_PCTL_PF0_U1RTS     0x00000001  // U1RTS on PF0
 #define GPIO_PCTL_PF0_SSI1RX    0x00000002  // SSI1RX on PF0
 #define GPIO_PCTL_PF0_CAN0RX    0x00000003  // CAN0RX on PF0
+#define GPIO_PCTL_PF0_PHA0      0x00000006  // PhA0 on PF0
 #define GPIO_PCTL_PF0_T0CCP0    0x00000007  // T0CCP0 on PF0
 #define GPIO_PCTL_PF0_NMI       0x00000008  // NMI on PF0
 #define GPIO_PCTL_PF0_C0O       0x00000009  // C0O on PF0
 #define GPIO_PCTL_PF0_TRD2      0x0000000E  // TRD2 on PF0
 
 
-//*****************************************************************************
-// Enabling the clock for the port that was passed in.
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//
-//    1.  Verify that the address passed in is a valid base address for a 
-//        GPIO Port.  See line 1545 of TM4C123GH6PM.h to a list of #defines
-//        for valid GPIO Ports.
-//
-//    2. Turn on the clock for the given port in RGCGPIO
-//
-//        ../include/sysctrl.h contains many useful
-//        #defines that will make your code more readable and less mistake prone.
-//        Search for SYSCTL_RCGCGPIO in that file.
-//
-//        Example 
-//        SYSCTL->RCGCGPIO |= SYSCTL_RCGCGPIO_R0;
-//
-//    2. Wait until the clock is on by checking PRGPIO
-//
-//        ../include/sysctrl.h contains many useful
-//        #defines that will make your code more readable and less mistake prone.
-//        Search for SYSCTL_PRGPIO in that file.
-//
-//        Example 
-//        val = SYSCTL->PRGPIO;
-//
-//    Steps 3 & 4 are only necessary for Ports F and D.
-//
-//    3. We need to set the LOCK register to 0x4C4F434B.
-//
-//       Example code:
-//       GPIO_PORTF_LOCK_R = 0x4C4F434B ;
-//
-//    4. Set the commit register
-//      
-//        Example Code:
-//        GPIO_PORTF_CR_R = 0xFF;
-//*****************************************************************************
-bool  gpio_enable_port(uint32_t baseAddr);
+typedef enum {
+  GPIO_OK = 1, 
+  GPIO_NULL_PTR = -1,  
+  GPIO_CLOCK_GATING_OFF = -2,
+  GPIO_UNKNOWN_ADDR = -3
+} gpio_status_t;
+
+typedef struct {
+  uint32_t    BaseAddr;
+  uint8_t     DigitalEnable;
+  uint8_t     Input;
+  uint8_t     Output;
+  uint8_t     InterruptEnable;
+  uint8_t     InterruptLevel;
+  uint8_t     InterruptLevelActiveHigh;
+  uint8_t     InterruptEdge;
+  uint8_t     InterruptEdgeRising;
+  uint8_t     InterruptEdgeBoth;
+  uint8_t     OpenDrainEnable;
+  uint8_t     PullDown;
+  uint8_t     PullUp;
+  uint8_t     AnalogEnable;
+  uint8_t     AlternateFunctionEnable;
+  uint32_t    PortControl;
+} GPIO_CONFIG;
 
 
-//*****************************************************************************
-// Setting a pins as a digital enable requires writing to DEN register
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//    pins  -   A bit mask indicating which pins should be configured as digital
-//              pins.  Modify only the bits where the bitmask is equal to 1.
-//
-// Use section 10.5 of the TM4C123 data sheet to determine the bits to set in 
-// the DEN register.
-//
-//*****************************************************************************
-bool  gpio_config_digital_enable(uint32_t baseAddr, uint8_t pins);
+gpio_status_t  initializeGPIOPort(GPIO_CONFIG *init);
+
+/******************************************************************************
+ * Turns on the clock for a given gpio port
+ *****************************************************************************/
+gpio_status_t gpioCheckBase(uint32_t gpioBase);
 
 
-//*****************************************************************************
-// Setting a GPIO pin as an output requires setting the DIR register
-//
-// Paramters
-//    pins  -   A bit mask indicating which pins should be configured as output
-//              pins.  Modify only the bits where the bitmask is equal to 1.
-//
-// Use section 10.5 of the TM4C123 data sheet to determine the bits to set in 
-// the DIR register.
-//*****************************************************************************
-bool  gpio_config_enable_output(uint32_t baseAddr, uint8_t pins);
+/******************************************************************************
+ * Turns on the clock for a given gpio port
+ *****************************************************************************/
+gpio_status_t gpioCheckClock(uint32_t gpioBase);
 
 
-//*****************************************************************************
-// Setting a GPIO pin as an input requires setting the DIR register
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//    pins  -   A bit mask indicating which pins should be configured as input
-//              pins.  Modify only the bits where the bitmask is equal to 1.
-//
-// Use section 10.5 of the TM4C123 data sheet to determine the bits to set in 
-// the DIR register.
-//
-//*****************************************************************************
-bool gpio_config_enable_input(uint32_t baseAddr, uint8_t pins);
+/******************************************************************************
+ * Turns on the clock for a given gpio port
+ *****************************************************************************/
+gpio_status_t gpioEnablePort(uint32_t gpioBase);
+
+/******************************************************************************
+ * Checks to see if a GPIO port is on.  If the port is not on, it will turn
+ * on the clock gating register for that port.
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  validatePortIsOn(uint32_t gpioBase);
 
 
-//*****************************************************************************
-// Enabling a pull-up resistor requires setting the PUR regsiter
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//    pins  -   A bit mask indicating which pins should be configured with a 
-//              pull-up resistor
-//*****************************************************************************
-bool  gpio_config_enable_pullup(uint32_t baseAddr, uint8_t pins);
+/******************************************************************************
+ * Configures GPIO pins and a digital input.
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               as in input.  Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigPinAsInput(uint32_t gpioBase, uint8_t pins);
 
-//*****************************************************************************
-// Enabling a pull-up resistor requires setting the PDR regsiter
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//    pins  -   A bit mask indicating which pins should be configured with a 
-//              pull-down resistor
-//*****************************************************************************
-bool  gpio_config_enable_pulldown(uint32_t baseAddr, uint8_t pins);
+/******************************************************************************
+ * Configures GPIO pins and a digital output.
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               as in output.  Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigPinAsOutput(uint32_t gpioBase, uint8_t pins);
+
+/******************************************************************************
+ * Enableds an internal pull-up resistor
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               with an internal pull-up.  
+ *               Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigPullUpEnable(uint32_t gpioBase, uint8_t pins);
 
 
-//*****************************************************************************
-// Configure pins as an analog input (AMSEL)
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//    pins  -   A bit mask indicating which pins should be configured as 
-//              analog inputs
-//*****************************************************************************
-bool  gpio_config_analog_enable(uint32_t baseAddr, uint8_t pins);
+/******************************************************************************
+ * Enableds an internal pull-down resistor
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               with an internal pull-down.  
+ *               Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigPullDownEnable(uint32_t gpioBase, uint8_t pins);
 
-//*****************************************************************************
-// Configure pins as their alternate function (AFSEL)
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//    pins  -   A bit mask indicating which pins should be configured as 
-//              alternate functions
-//*****************************************************************************
-bool  gpio_config_alternate_function(uint32_t baseAddr, uint8_t pins);
+/******************************************************************************
+ * Configures a GPIO pin as an Open Drain GPIO Pin
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               with an Open Drain.  
+ *               Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigOpenDrainEnable(uint32_t gpioBase, uint8_t pins);
 
-//*****************************************************************************
-// Configure pins to set the specified port control register (PCTL
-//
-// Paramters
-//    baseAddr - Base address of GPIO port that is being enabled.
-//    pins  -   A bit mask indicating which pins should be configured for the 
-//              specified port control register.
-//*****************************************************************************
-bool  gpio_config_port_control(uint32_t baseAddr, uint8_t pins);
-  
+/******************************************************************************
+ * Configures a GPIO Digital Pin
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               as an Digital pin.  
+ *               Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigDigitalEnable(uint32_t gpioBase, uint8_t pins);
+
+/******************************************************************************
+ * Configures a GPIO Analog Pin
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               as an Analog pin.  
+ *               Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigAnalogEnable(uint32_t gpioBase, uint8_t pins);
+
+/******************************************************************************
+ * Configures a GPIO for its alternate function
+ *
+ * Parameters
+ *    gpioBase - A valid base address of a GPIO port
+ *    pins     - A bitmask where a '1' indicates which pins will be configured
+ *               as its alternate function.  
+ *               Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigAltFunction(uint32_t gpioBase, uint8_t pins);
+
+/******************************************************************************
+ * Sets the Port Control Mux value
+ *
+ * Parameters
+ *    gpioBase     - A valid base address of a GPIO port
+ *    pctlMask     - This bit mask will be ORed with the current value of
+ *                   the PCTL register.  If you need to zero out this register
+ *                   you will need to write to the PCTL register explicityly!
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigPortConfig(uint32_t gpioBase, uint32_t pctlMask);
+
+/******************************************************************************
+ * Configures a Digital GPIO Pin to interrupt on rising edges
+ *
+ * Parameters
+ *    gpioBase   - A valid base address of a GPIO port
+ *    mask       - A bitmask where a '1' indicates which pins will be configured
+ *                 with rising edge interrupts.  
+ *                 Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigInterruptRisingEdges(uint32_t gpioBase, uint32_t mask);
+
+/******************************************************************************
+ * Configures a Digital GPIO Pin to interrupt on falling edges
+ *
+ * Parameters
+ *    gpioBase   - A valid base address of a GPIO port
+ *    mask       - A bitmask where a '1' indicates which pins will be configured
+ *                 with falling edge interrupts.  
+ *                 Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioConfigInterruptFallingEdges(uint32_t gpioBase, uint32_t mask);
+
+/******************************************************************************
+ * Disables a GPIO Pin's  falling edge IRQs
+ *
+ * Parameters
+ *    gpioBase   - A valid base address of a GPIO port
+ *    mask       - A bitmask where a '1' indicates which pins will be disabled
+ *                 Bit locations with a '0' are left unmodified.
+ *
+ * Return 
+ *     If the gpioBase address is valid, it will return GPIO_OK
+ *****************************************************************************/
+gpio_status_t  gpioDisableInterrupt(uint32_t gpioBase, uint32_t mask);
+
 #endif

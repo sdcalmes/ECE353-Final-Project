@@ -14,6 +14,8 @@
         <TargetCommonOption>
           <Device>TM4C123GH6PM</Device>
           <Vendor>Texas Instruments</Vendor>
+          <PackID>Keil.TM4C_DFP.1.0.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x040000) IRAM(0x20000000,0x008000) CPUTYPE("Cortex-M4") FPU2 CLOCK(80000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -143,7 +145,6 @@
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>1</RestoreTracepoints>
             <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>3</TargetSelection>
@@ -457,6 +458,11 @@
               <FileType>1</FileType>
               <FilePath>.\wireless.c</FilePath>
             </File>
+            <File>
+              <FileName>boardUtil.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\boardUtil.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -567,7 +573,20 @@
               <FileType>5</FileType>
               <FilePath>.\interrupts.h</FilePath>
             </File>
+            <File>
+              <FileName>boardUtil.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\boardUtil.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gpio.h</FilePath>
+            </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
           <GroupName>::Device</GroupName>
@@ -591,6 +610,12 @@
   <RTE>
     <apis/>
     <components>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="3.40.0" condition="CMSIS Core">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.2.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="TM4C CMSIS Device">
         <package name="TM4C_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.0.0"/>
         <targetInfos>

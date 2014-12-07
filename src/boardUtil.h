@@ -24,59 +24,6 @@
 
 
 
-// port define
-#define PIN_0               (1 << 0)
-#define PIN_1               (1 << 1)
-#define PIN_2               (1 << 2)
-#define PIN_3               (1 << 3)
-#define PIN_4               (1 << 4)
-#define PIN_5               (1 << 5)
-#define PIN_6               (1 << 6)
-#define PIN_7               (1 << 7)
-
-#define     PA0     PIN_0
-#define     PA1     PIN_1		
-#define     PA2     PIN_2		//LCD_SPI0_CLK
-#define     PA3     PIN_3		//LCD_SPI0_CS
-#define     PA4     PIN_4		//LCD_CD
-#define     PA5     PIN_5		//LCD_SPI0_MOSI
-#define     PA6     PIN_6		//12C1_SCL
-#define     PA7     PIN_7		//12C1_SDA
-
-#define     PB0     PIN_0		//DAC_0
-#define     PB1     PIN_1		//DAC_1
-#define     PB2     PIN_2		//DAC_2
-#define     PB3     PIN_3		//DAC_3
-#define     PB4     PIN_4		//DAC_4
-#define     PB5     PIN_5		//DAC_5
-#define     PB6     PIN_6		//~
-#define     PB7     PIN_7		//~
-
-#define     PC4     PIN_4		//~
-#define     PC5     PIN_5		//~
-#define     PC6     PIN_6		//XBEE_RST_n
-#define     PC7     PIN_7		//LCD_RST_n
-
-#define     PD0     PIN_0		//RF_SPI1_CLK
-#define     PD1     PIN_1		//RF_SPI1_CS
-#define     PD2     PIN_2		//RF_SPI1_MISO
-#define     PD3     PIN_3		//RF_SPI1_MOSI
-#define     PD6     PIN_6		//RF_CE
-#define     PD7     PIN_7		//RF_IRQ
-
-#define     PE0     PIN_0		//BTN_PS2
-#define     PE1     PIN_1		//POT_AIN2
-#define     PE2     PIN_2		//PS2_AIN1 - X-Direction
-#define     PE3     PIN_3		//PS2_AIN0 - Y-Direction
-#define     PE4     PIN_4		//XBEE_US_RX
-#define     PE5     PIN_5		//XBEE_US_TX
-
-#define     PF0     PIN_0		//~
-#define     PF1     PIN_1		//BTN_UP
-#define     PF2     PIN_2		//BTN_RIGHT
-#define     PF3     PIN_3		//BTN_LEFT
-#define     PF4     PIN_4		//BTN_DOWN
-
 //************************
 // Defines for peripherals
 //************************

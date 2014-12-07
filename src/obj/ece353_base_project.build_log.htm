@@ -5,11 +5,11 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.12.0.0
 Copyright (C) 2014 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: sam calmes, uw madison, LIC=----
+License Information: Frank Barry-Lenoch, University of Wisconsin - Madison, LIC=----
  
 Tool Versions:
 Toolchain:       MDK-Lite  Version: 5.12.0.0
-Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+Toolchain Path:  C:\Program Files\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.05 (build 41)
 Assembler:       Armasm.exe V5.05 (build 41)
 Linker/Locator:  ArmLink.exe V5.05 (build 41)
@@ -21,13 +21,13 @@ Target DLL:      lmidk-agdi.dll V???
 Dialog DLL:      TCM.DLL V1.14.2.0
  
 <h2>Project:</h2>
-C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\ece353_base_project.uvprojx
+E:\Documents\GitHub\ECE353-Final-Project\src\ece353_base_project.uvprojx
 Project File Date:  12/07/2014
 
 <h2>Output:</h2>
 Rebuild target 'Target 1'
 compiling main.c...
-main.c(51): warning:  #177-D: function "button_debounce" was declared but never referenced
+main.c(40): warning:  #177-D: function "button_debounce" was declared but never referenced
   static void button_debounce(unsigned char *changes, bool change){
 main.c: 1 warning, 0 errors
 compiling fonts.c...
@@ -36,25 +36,27 @@ compiling gpioPort.c...
 compiling interrupts.c...
 interrupts.c(67): warning:  #550-D: variable "val" was set but never used
      uint32_t val;
-interrupts.c(111): warning:  #1-D: last line of file ends without a newline
-  }
-interrupts.c: 2 warnings, 0 errors
+interrupts.c: 1 warning, 0 errors
 compiling pc_buffer.c...
 compiling spi.c...
 compiling uart.c...
 compiling watchdog.c...
 compiling wireless.c...
 compiling boardUtil.c...
-boardUtil.c(35): warning:  #223-D: function "uart0_init_115K" declared implicitly
-    uart0_init_115K();
-boardUtil.c(90): warning:  #223-D: function "lcd_set_pin_config" declared implicitly
-                lcd_set_pin_config (SSI0_BASE, GPIOC_BASE, PC7, GPIOA_BASE, PA5);
-boardUtil.c: 2 warnings, 0 errors
+boardUtil.c(57): warning:  #223-D: function "uart_init_115K" declared implicitly
+    uart_init_115K(
+boardUtil.c(122): warning:  #223-D: function "wireless_set_pin_config" declared implicitly
+    wireless_set_pin_config(
+boardUtil.c(142): warning:  #69-D: integer conversion resulted in truncation
+    gpio_config_port_control(RF_GPIO_BASE, RF_MISO_PIN_PCTL);
+boardUtil.c(147): warning:  #69-D: integer conversion resulted in truncation
+    gpio_config_port_control(RF_GPIO_BASE, RF_MOSI_PIN_PCTL);
+boardUtil.c: 4 warnings, 0 errors
 assembling startup_TM4C123.s...
 compiling system_TM4C123.c...
 linking...
-Program Size: Code=4560 RO-data=3756 RW-data=32 ZI-data=4312  
-".\obj\ece353_base_project.axf" - 0 Error(s), 5 Warning(s).
+Program Size: Code=5728 RO-data=3756 RW-data=32 ZI-data=4336  
+".\obj\ece353_base_project.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -71,9 +73,9 @@ Package Vendor: Keil
    * Component: Startup Version: 1.0.0
 
 <h2>Collection of Component include folders:</h2>
-  C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\RTE
-  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
-  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+  E:\Documents\GitHub\ECE353-Final-Project\src\RTE
+  C:\Program Files\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+  C:\Program Files\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
 
 <h2>Collection of Component Files used:</h2>
 
@@ -84,11 +86,31 @@ Package Vendor: Keil
       Include file:  Device\Include\TM4C123\TM4C123.h
       Source file:   Device\Source\ARM\startup_TM4C123.s
       Source file:   Device\Source\system_TM4C123.c
-Load "C:\\Users\\calmes\\Documents\\GitHub\\ECE353-Final-Project\\src\\obj\\ece353_base_project.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-s
+TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
+Target not created.
+ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+  C:\Program Files\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
+Target not created.
+lude\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
       Source file:   Device\Source\system_TM4C123.c
 Target not created.

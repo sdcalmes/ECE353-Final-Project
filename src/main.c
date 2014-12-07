@@ -24,21 +24,10 @@
 // main.c
 // Author: jkrachey@wisc.edu, Sam Calmes, Frank Barry-Lenoch
 //*****************************************************************************
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
 
-#include "../include/fonts.h"
-#include "../include/eadogs102w.h"
-#include "gpioPort.h"
 #include "TM4C123.h"
 #include "boardUtil.h"
-#include "../include/adc.h"
-#include "../include/spi.h"
 
-extern void serialDebugInit(void);
-extern void lcdInit(void);
-extern void test_lcd(void);
 
 /******************************************************************************
  * Global Variables
@@ -58,38 +47,6 @@ static void button_debounce(unsigned char *changes, bool change){
 	}
 
 	
-	//MODIFY TO USE boardUtil functions*************
-	void gpio_init(){
-		//Buttons
-		gpio_enable_port(GPIOF_BASE);
-		gpio_config_digital_enable(GPIOF_BASE, BUTTON_PINS);
-		gpio_config_enable_input(GPIOF_BASE, BUTTON_PINS);
-		gpio_config_enable_pullup(GPIOF_BASE, BUTTON_PINS);
-		
-		//LCD
-		gpio_enable_port(GPIOC_BASE);
-		gpio_enable_port(GPIOA_BASE);
-		gpio_config_digital_enable(GPIOA_BASE,(1 << CMD_PIN_NUM));
-		gpio_config_digital_enable(GPIOC_BASE,(1 << RESET_PIN_NUM));
-		gpio_config_enable_output(GPIOC_BASE, (1 << RESET_PIN_NUM));
-		gpio_config_digital_enable(GPIOA_BASE, LCD_PINS | (1 << CMD_PIN_NUM));
-		gpio_config_enable_output(GPIOA_BASE, LCD_PINS | (1 << CMD_PIN_NUM));
-		gpio_config_alternate_function(GPIOA_BASE, LCD_PINS);
-		GPIOA->DATA |= (1 << CMD_PIN_NUM);
-		GPIOC->DATA |= (1 << RESET_PIN_NUM);
-		
-			//Joystick
-	gpio_enable_port(PS2_GPIO_BASE);
-	gpio_config_enable_input(PS2_GPIO_BASE, PS2_X_DIR_PIN);
-	gpio_config_enable_input(PS2_GPIO_BASE, PS2_Y_DIR_PIN);
-	gpio_config_analog_enable(PS2_GPIO_BASE, PS2_X_DIR_PIN);
-	gpio_config_analog_enable(PS2_GPIO_BASE, PS2_Y_DIR_PIN);
-	gpio_config_alternate_function(PS2_GPIO_BASE, PS2_X_DIR_PIN);
-	gpio_config_alternate_function(PS2_GPIO_BASE, PS2_Y_DIR_PIN);
-  initializeADC(PS2_ADC_BASE);
-  	
-  //LED Matrix using I2C
-	}
 
 //*****************************************************************************
 // Test function to determine if the LCD GPIO and SPI interfaces have been
@@ -140,17 +97,6 @@ main(void)
   // The LCD driver requires you to provide information about how
   // the LCD is connected to the Tiva Launchpad.  You can obtain this information
   // by examinine the ECE353 daughter board schematics
-	serialDebugInit();
-	gpio_init();
-	initialize_spi(SSI0_BASE,3);
-	SysTick_Config(250000);
-	lcd_set_pin_config (
-		SSI0_BASE,
-		GPIOC_BASE,
-		(1 << RESET_PIN_NUM),
-		GPIOA_BASE,
-		(1 << CMD_PIN_NUM)
-	);
 
   //  lcd_set_pin_config (
   //    spi_base, 
@@ -160,6 +106,7 @@ main(void)
   //    cmd_pin_num
   //
 	
+	f14_project_boardUtil();
 
   // Uncomment the line below only after you  have configured the 
   // SPI and GPIO pins used by the LCD.  If you have configured the

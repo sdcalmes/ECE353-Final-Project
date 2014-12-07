@@ -109,19 +109,12 @@ static __INLINE void  wireless_CE_Pulse(void)
 static __INLINE uint8_t wireless_reg_read(uint8_t reg)
 {
 	uint8_t dataIn[2];
-	uint8_t dataOut[2];
-	//the 5-bit address specificed by the lower 5 bits of paramter reg
-	// R_REGISTER command is 000
-	uint8_t regAddr = reg & 0x1F;
-		
-
-	dataIn[0] = regAddr;
-	dataIn[1] = 0xFF;
-	
-	
+  uint8_t dataOut[2];
+	dataIn[0] = reg;
+	dataIn[0] &= ~0xE0;
 	wireless_CSN_low();
-	spiTx(wirelessPinConfig.wireless_spi_base, dataIn, 2, dataOut);
-	wireless_CSN_high();
+  spiTx(wirelessPinConfig.wireless_spi_base,dataIn, 2, dataOut);
+  wireless_CSN_high();
 	
 	return dataOut[1];
 }
@@ -141,20 +134,15 @@ static __INLINE uint8_t wireless_reg_read(uint8_t reg)
 //*****************************************************************************
 static __INLINE void wireless_reg_write(uint8_t reg, uint8_t data)
 {
-	
 	uint8_t dataIn[2];
-	uint8_t dataOut[2];
-	uint8_t regAddr = reg & 0x1F;
-	// W_REGISTER command is 001
-	regAddr |= 0x20;
-	
-	dataIn[0] = regAddr;
+  uint8_t dataOut[2];
+	dataIn[0] = reg;
+	dataIn[0] &= ~0xE0;
+	dataIn[0] |= 0x20;
 	dataIn[1] = data;
-	
-
 	wireless_CSN_low();
-	spiTx(wirelessPinConfig.wireless_spi_base, dataIn, 2, dataOut);
-	wireless_CSN_high();
+  spiTx(wirelessPinConfig.wireless_spi_base,dataIn, 2, dataOut);
+  wireless_CSN_high();
 }
 
 //*****************************************************************************
@@ -168,20 +156,18 @@ static __INLINE void wireless_reg_write(uint8_t reg, uint8_t data)
 //*****************************************************************************
 static __INLINE void wireless_set_tx_addr(uint8_t  *tx_addr)
 {
-	uint8_t dataIn[6];
-	uint8_t dataOut[6];
-	uint8_t command = 0x30;
-	dataIn[0] = command;
-	dataIn[1] = tx_addr[0];
-	dataIn[2] = tx_addr[1];
-	dataIn[3] = tx_addr[2];
-	dataIn[4] = tx_addr[3];
-	dataIn[5] = tx_addr[4];
+  uint8_t dataIn[6];
+  uint8_t dataOut[6];
 
-	
-	wireless_CSN_low();
-	spiTx(wirelessPinConfig.wireless_spi_base, dataIn, 6, dataOut);
-	wireless_CSN_high();
+  dataIn[0] = NRF24L01_TX_ADDR_R |  NRF24L01_CMD_W_REGISTER;
+  dataIn[1] = *(tx_addr + 0);
+  dataIn[2] = *(tx_addr + 1);
+  dataIn[3] = *(tx_addr + 2);
+  dataIn[4] = *(tx_addr + 3);
+  dataIn[5] = *(tx_addr + 4);
+  wireless_CSN_low();
+  spiTx(wirelessPinConfig.wireless_spi_base,dataIn, 6, dataOut);
+  wireless_CSN_high();
 }
 
 //*****************************************************************************
@@ -195,22 +181,19 @@ static __INLINE void wireless_set_tx_addr(uint8_t  *tx_addr)
 //*****************************************************************************
 static __INLINE void wireless_tx_data_payload( uint32_t data)
 {
-	
 	uint8_t dataIn[5];
 	uint8_t dataOut[5];
-	uint8_t command = 0x31;
-	dataIn[0] = command;
-	dataIn[1] = (data >> 24);
-	dataIn[2] = (data >> 16);
-	dataIn[3] = (data >> 8);
-	dataIn[4] = (data >> 0);
-
-
-	
+	dataIn[0] = NRF24L01_CMD_W_TX_PAYLOAD;
+	dataIn[1] = (data>>24);
+	dataIn[2] = (data>>16);
+	dataIn[3] = (data>>8);
+	dataIn[4] = (data);
 	wireless_CSN_low();
-	spiTx(wirelessPinConfig.wireless_spi_base, dataIn, 5, dataOut);
-	wireless_CSN_high();
+  spiTx(wirelessPinConfig.wireless_spi_base,dataIn, 5, dataOut);
+  wireless_CSN_high();
 }
+
+
 
 //*****************************************************************************
 // ADD CODE
@@ -223,21 +206,13 @@ static __INLINE void wireless_tx_data_payload( uint32_t data)
 //*****************************************************************************
 static __INLINE void wireless_rx_data_payload( uint32_t *data)
 {
-	
-	uint8_t dataIn[6];
-	uint8_t dataOut[6];
-	uint8_t command = 0xA0;
-	dataIn[0] = command;
-	dataIn[1] = data[0];
-	dataIn[2] = data[1];
-	dataIn[3] = data[2];
-	dataIn[4] = data[3];
-	dataIn[5] = 0xFF;
-	
-	
+	uint8_t dataIn[5];
+	uint8_t dataOut[5];
+	*dataIn = NRF24L01_CMD_R_RX_PAYLOAD;
 	wireless_CSN_low();
-	spiTx(wirelessPinConfig.wireless_spi_base, dataIn, 6, dataOut);
-	wireless_CSN_high();
+  spiTx(wirelessPinConfig.wireless_spi_base,dataIn, 5, dataOut);
+  wireless_CSN_high();
+	*data = (dataOut[1]<<24)|(dataOut[2]<<16)|(dataOut[3]<<8)|(dataOut[4]); 
 }
 
 //****************************************************************************
@@ -264,11 +239,11 @@ static __INLINE int32_t wireless_set_rx_addr(
   }
 
   dataIn[0] = wireless_reg |  NRF24L01_CMD_W_REGISTER   ;
-  dataIn[1] = *(rx_addr +0 );
-  dataIn[2] = *(rx_addr +1 );
-  dataIn[3] = *(rx_addr +2 );
-  dataIn[4] = *(rx_addr +3 );
-  dataIn[5] = *(rx_addr +4 );
+  dataIn[1] = *(rx_addr + 0 );
+  dataIn[2] = *(rx_addr + 1 );
+  dataIn[3] = *(rx_addr + 2 );
+  dataIn[4] = *(rx_addr + 3 );
+  dataIn[5] = *(rx_addr + 4 );
   wireless_CSN_low();
   spiTx(wirelessPinConfig.wireless_spi_base,dataIn, 6, dataOut);
   wireless_CSN_high();

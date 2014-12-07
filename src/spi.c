@@ -30,9 +30,9 @@ bool
 spiVerifyBaseAddr(uint32_t base)
 {
   if ( base == SSI0_BASE ||
-       base == SSI1_BASE ||
-       base == SSI2_BASE ||
-       base == SSI3_BASE
+        base == SSI1_BASE ||
+        base == SSI2_BASE ||
+        base == SSI3_BASE
   )
   {
     return true;
@@ -93,14 +93,40 @@ bool initialize_spi( uint32_t base_addr, uint8_t spi_mode)
     // FSSIClk = FSysClk / (CPSDVSR * (1 + SCR))
     // Modify CPSR and CR0
 		mySSI->CPSR = 10;
-		mySSI->CR0 &=  ~SSI_CR0_SCR_M;
-     
-		// Configure SPI control0 for freescale format, data width of 8 bits
-    mySSI->CR0 =   (SSI_CR0_DSS_8 | SSI_CR0_FRF_MOTO);
+		mySSI->CR0 &= ~SSI_CR0_SCR_M;
+		
+     // Configure SPI control0 for freescale format, data width of 8 bits
+     mySSI->CR0 =   (SSI_CR0_DSS_8 | SSI_CR0_FRF_MOTO);
     
     // ADD CODE
     // Configure the SPI MODE in CR0
-		mySSI->CR0 |= (spi_mode << 6);
+		switch(spi_mode)
+		{
+			case 0:
+			{
+				mySSI->CR0 |= (SSI_SPO_LOW<<6)|(SSI_SPH_FIRST<<7);
+				break;
+			}
+			case 1:
+			{
+				mySSI->CR0 |= (SSI_SPO_LOW<<6)|(SSI_SPH_SECOND<<7);
+				break;
+			}
+			case 2:
+			{
+				mySSI->CR0 |= (SSI_SPO_HIGH<<6)|(SSI_SPH_FIRST<<7);
+				break;
+			}
+			case 3:
+			{
+				mySSI->CR0 |= (SSI_SPO_HIGH<<6)|(SSI_SPH_SECOND<<7);
+				break;
+			}
+			default:
+			{
+				return false;
+			}
+		}
     
     //Enable SSI
     mySSI->CR1 |= SSI_CR1_SSE;

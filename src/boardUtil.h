@@ -89,5 +89,8 @@
 void serialDebugInit(void);
 void DisableInterrupts(void);
 void EnableInterrupts(void);
+void serialDebugInit(void);
+void lcdInit(void);
+void test_lcd(void);
 
 #endif

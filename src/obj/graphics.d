@@ -1,0 +1,9 @@
+.\obj\graphics.o: graphics.c
+.\obj\graphics.o: graphics.h
+.\obj\graphics.o: ../include/eadogs102w.h
+.\obj\graphics.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\graphics.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\obj\graphics.o: ../include/fonts.h
+.\obj\graphics.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\obj\graphics.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\obj\graphics.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

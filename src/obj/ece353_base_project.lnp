@@ -10,6 +10,7 @@
 ".\obj\watchdog.o"
 ".\obj\wireless.o"
 ".\obj\boardutil.o"
+".\obj\graphics.o"
 "..\lib\ece353_project.lib"
 ".\obj\startup_tm4c123.o"
 ".\obj\system_tm4c123.o"

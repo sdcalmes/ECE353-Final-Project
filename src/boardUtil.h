@@ -82,6 +82,14 @@
 #define   RF_PAYLOAD_SIZE     0x04
 #define   RF_CHANNEL          0x02
 
+// I2C Defines (for EEPROM and IOEXPANDER)
+#define I2C_GPIO_BASE	GPIOA_BASE
+#define	I2C_I2C_BASE	I2C1_BASE
+#define I2C_SCL_PIN	PA6
+#define	I2C_SDA_PIN	PA7
+#define	I2C_SCL_PIN_PCTL	GPIO_PCTL_PA6_I2C1SCL
+#define I2C_SDA_PIN_PCTL	GPIO_PCTL_PA7_I2C1SDA
+
 //*****************************************************************************
 // Fill out the #defines below to configure which pins are connected to
 // the serial debug UART
@@ -101,6 +109,7 @@ void serialDebugInit(void);
 void pushButtonInit(void);
 void joyStickInit(void);
 void lcdInit(void);
+void i2cInit(void);
 void f14_project_boardUtil(void);
 
 #endif

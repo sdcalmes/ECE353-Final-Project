@@ -1,5 +1,6 @@
 #include "TM4C123GH6PM.h"
 #include "boardUtil.h"
+#include "gpioPort.h"
 
 // PC buffers
 #define UART0_BUFFER_SIZE 80
@@ -167,4 +168,20 @@ void rf_init(void)
 void lcdInit(void)
 {
 		lcd_set_pin_config (SSI0_BASE, GPIOC_BASE, PC7, GPIOA_BASE, PA5);
+}
+
+void i2cInit(void)
+{
+	gpio_enable_port(I2C_GPIO_BASE);
+	
+	//configure SCL
+	gpio_config_digital_enable(I2C_GPIO_BASE, I2C_SCL_PIN);
+	gpio_config_alternate_function(I2C_GPIO_BASE, I2C_SCL_PIN);
+	gpio_config_port_control(I2C_GPIO_BASE, I2C_SCL_PIN_PCTL);
+	
+	//configure SDA
+	gpio_config_digital_enable(I2C_GPIO_BASE, I2C_SDA_PIN);
+	gpio_config_open_drain(I2C_GPIO_BASE, I2C_SDA_PIN);
+	gpio_config_alternate_function(I2C_GPIO_BASE, I2C_SDA_PIN);
+	gpio_config_port_control(I2C_GPIO_BASE, I2C_SDA_PIN_PCTL);
 }

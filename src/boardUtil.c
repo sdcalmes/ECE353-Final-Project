@@ -21,10 +21,8 @@ void f14_project_boardUtil(void){
 	pushButtonInit();
 	lcdInit();
 	joyStickInit();
-	
 	initialize_spi(SSI0_BASE, 3);
 	i2cInit();
-	SysTick_Config(250000);
 	
 	lcd_set_pin_config (SSI0_BASE, GPIOC_BASE, PC7, GPIOA_BASE, PA4);
 	

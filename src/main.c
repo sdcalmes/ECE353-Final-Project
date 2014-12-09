@@ -69,7 +69,7 @@ void test_lcd(void)
   }
 	else
 	{
-			//printf("\n\r Initialized");
+			printf("\n\r Initialized\n");
 	}
    lcd_clear();
   for(i = 0; i < 7; i++)
@@ -101,6 +101,8 @@ void print_ps2(void){
 			for(i=0;i<1000000; i++){};
 		}
 	}
+
+	
 int 
 main(void)
 {
@@ -124,7 +126,7 @@ main(void)
   // interface correctly, the LCD should display an image and a message
   //printf("TEST_LCD\n");
 
-//  test_lcd();
+  test_lcd();
 		
 	print_ps2();
   

@@ -2,6 +2,7 @@
 #include "pc_buffer.h"
 #include "../include/uart.h"
 #include "../include/adc.h"
+#include "../include/eadogs102w.h"
 
 extern PC_Buffer UART0_Rx_Buffer;
 extern PC_Buffer UART0_Tx_Buffer;

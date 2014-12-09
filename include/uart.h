@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include "TM4C123GH6PM.h"
-#include "../include/sysctrl.h"
 #include "../include/circular_buffer.h"
+#include "../include/sysctrl.h"
 
 // SysCtrl UART Masks
 #define SYSCTL_RCGCUART_UART7      0x00000080  // UART Module 7 Run Mode Clock
@@ -379,6 +379,7 @@ typedef struct {
 
 /* Exported functions --------------------------------------------------*/
 bool InitializeUART(UART_CONFIG *init);
+bool uart0_init_115K(void);
 char uartRxPoll(uint32_t base, bool block);
 void uartTxPoll(uint32_t base, char *data);
 

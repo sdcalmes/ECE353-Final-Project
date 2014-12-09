@@ -1,46 +1,73 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
 #include "../include/adc.h"
 #include "../include/sysctrl.h"
 
 /******************************************************************************
  * Initializes ADC to use Sample Sequencer #3, triggered by software, no IRQs
  *****************************************************************************/
-bool initializeADC(  uint32_t adc_base ){
-	ADC0_Type* myAdc;
+bool initializeADC(  uint32_t adc_base )
+{
+  ADC0_Type  *myADC;
+  uint32_t rcgc_adc_mask;
+  uint32_t pr_mask;
+
+  // examine the adc_base.  Verify that it is either ADC0 or ADC1
+  // Set the rcgc_adc_mask and pr_mask  
+  switch (adc_base) 
+  {
+    case ADC0_BASE :
+    {
+      
+      // ADD CODE
+      // set rcgc_adc_mask
+			rcgc_adc_mask = SYSCTL_RCGCADC_R0;
+      // Set pr_mask 
+			pr_mask = SYSCTL_PRADC_R0;
+      break;
+    }
+    case ADC1_BASE :
+    {
+        // ADD CODE
+      // set rcgc_adc_mask
+      rcgc_adc_mask = SYSCTL_RCGCADC_R1;
+      // Set pr_mask 
+			pr_mask = SYSCTL_PRADC_R1;
+      break;
+    }
+    
+    default:
+      return false;
+  }
+  
+  // Turn on the ADC Clock
+  SYSCTL->RCGCADC = rcgc_adc_mask;
+  
+  // Wait for ADCx to become ready
+  while( (SYSCTL->PRADC & pr_mask) == 0){}
+    
+  // Type Cast adc_base and set it to myADC
+  myADC = (ADC0_Type *)adc_base;
+  
+  // ADD CODE
+  // disable sample sequencer #3 by writing a 0 to the 
+  // corresponding ASENn bit in the ADCACTSS register 
+	myADC->ACTSS &= ~ADC_ACTSS_ASEN3;
+		
+  // ADD CODE
+  // Set the event multiplexer to trigger conversion on a software trigger
+  // for sample sequencer #3.
+	myADC->EMUX |= ADC_EMUX_EM3_PROCESSOR;
+  
+	// ADD CODE
+  // Set IE0 and END0 in SSCTL3
+  myADC->SSCTL3 |= (ADC_SSCTL3_IE0 | ADC_SSCTL3_END0);
 	
-	//Enable clock for adc and wait for peripheral
-	SYSCTL->RCGCADC |= SYSCTL_RCGCADC_R0;
-	while(!(SYSCTL->PRADC & SYSCTL_PRADC_R0));
-	
-	myAdc = (ADC0_Type*)adc_base;
-	
-	//Disable Sample Sequencer 3
-	myAdc->ACTSS &= ~ADC_ACTSS_ASEN3;
-	
-	//Set ADC to be triggered by Timer0A
-	myAdc->EMUX |= ADC_EMUX_EM3_TIMER;
-	
-	//Set to take 16 samples
-	myAdc->SAC = 4;
-	
-	//Configure SS3, so sequence ends after END0
-	myAdc->SSCTL3 |= (ADC_SSCTL3_END0 | ADC_SSCTL3_IE0);
-	
-	//Enable interrupts
-	myAdc->IM |= ADC_IM_MASK3;
-	
-	//Set channel
-	myAdc->SSMUX3 = 1;
-	
-	//Set priority for SS3, and enable interrupt
-	NVIC_SetPriority(ADC0SS3_IRQn, 1);
-	NVIC_EnableIRQ(ADC0SS3_IRQn);
-	
-	//enable ss3
-	myAdc->ACTSS |= ADC_ACTSS_ASEN3;
-	
-	//Start SS3
-	myAdc->PSSI = ADC_PSSI_SS3;
-	return true;
+	// SAC Use hardware averaging over 16 samples.
+	myADC->SAC = ADC_SAC_AVG_16X;
+  return true;
 }
 
 /******************************************************************************
@@ -69,9 +96,10 @@ uint32_t getADCValue( uint32_t adc_base, uint8_t channel)
     // wait
   }
   
-  result = myADC->SSFIFO3 & 0xFFF;    // Read 12-bit data
+  result = myADC->SSFIFO3 & 0xFFF;
+	//ADC_SSFIFO3_DATA_M;    // Read 12-bit data
   
-  myADC->ISC  = ADC_ISC_IN3;          // Ack the conversion
+  myADC->ISC  = ADC_ISC_IN3;          // Acknowledge the conversion
   
   return result;
 }

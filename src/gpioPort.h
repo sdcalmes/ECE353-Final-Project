@@ -435,5 +435,9 @@ bool  gpio_config_alternate_function(uint32_t baseAddr, uint8_t pins);
 //              specified port control register.
 //*****************************************************************************
 bool  gpio_config_port_control(uint32_t baseAddr, uint8_t pins);
+
+
+//************************************************************
+bool gpio_config_open_drain(uint32_t gpioBase, uint8_t pins);
   
 #endif

@@ -27,6 +27,7 @@
 
 #include "TM4C123.h"
 #include "boardUtil.h"
+#include "../include/adc.h"
 
 
 /******************************************************************************
@@ -68,12 +69,11 @@ void test_lcd(void)
   }
 	else
 	{
-			printf("\n\r Initialized");
+			//printf("\n\r Initialized");
 	}
    lcd_clear();
   for(i = 0; i < 7; i++)
   {
-    
      lcd_set_page(i+1);
     for(j=0; j<56; j++)
     {
@@ -91,9 +91,20 @@ void test_lcd(void)
 
 //*****************************************************************************
 //*****************************************************************************
+void print_ps2(void){
+	uint32_t x_data, y_data;
+	uint32_t i;
+	while(1){
+			x_data = getADCValue(PS2_ADC_BASE,PS2_X_ADC_CHANNEL);
+			y_data = getADCValue(PS2_ADC_BASE,PS2_Y_ADC_CHANNEL);
+		printf("X Dir: 0x%04x\tY Dir: 0x%04x\tY Page:0x%04x\tX Column: 0x%04x\r",((x_data)),((y_data)),(y_data/0x1A2),(x_data/0x28));
+			for(i=0;i<1000000; i++){};
+		}
+	}
 int 
 main(void)
 {
+	
   // The LCD driver requires you to provide information about how
   // the LCD is connected to the Tiva Launchpad.  You can obtain this information
   // by examinine the ECE353 daughter board schematics
@@ -105,14 +116,17 @@ main(void)
   //    cmd_pin_base,
   //    cmd_pin_num
   //
-	
+//	SysTick_Config(250000);
 	f14_project_boardUtil();
-
+	
   // Uncomment the line below only after you  have configured the 
   // SPI and GPIO pins used by the LCD.  If you have configured the
   // interface correctly, the LCD should display an image and a message
-  printf("TEST_LCD\n");
-  test_lcd();
+  //printf("TEST_LCD\n");
+
+//  test_lcd();
+		
+	print_ps2();
   
   // Infinite Loop
   while(1){

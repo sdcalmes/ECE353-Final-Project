@@ -1,14 +1,5 @@
 #include "TM4C123GH6PM.h"
 #include "boardUtil.h"
-#include "gpioPort.h"
-
-// PC buffers
-#define UART0_BUFFER_SIZE 80
-PC_Buffer UART0_Rx_Buffer;
-char UART0_Rx_Buffer_Array[UART0_BUFFER_SIZE];
-
-PC_Buffer UART0_Tx_Buffer;
-char UART0_Tx_Buffer_Array[UART0_BUFFER_SIZE];
 
 void DisableInterrupts(void)
 {
@@ -24,12 +15,19 @@ void EnableInterrupts(void)
 }
 
 void f14_project_boardUtil(void){
-	
-	uart0_config_gpio();
+	DisableInterrupts();
 	serialDebugInit();
+	EnableInterrupts();
 	pushButtonInit();
-	joyStickInit();
 	lcdInit();
+	joyStickInit();
+	
+	initialize_spi(SSI0_BASE, 3);
+	i2cInit();
+	SysTick_Config(250000);
+	
+	lcd_set_pin_config (SSI0_BASE, GPIOC_BASE, PC7, GPIOA_BASE, PA4);
+	
 }
 
 //*****************************************************************************
@@ -48,20 +46,9 @@ void uart0_config_gpio(void)
 void serialDebugInit(void)
 {
   // Configure GPIO Pins
-  uart0_config_gpio();
-  
-  // Configure Circular Buffers
-  pc_buffer_init(&UART0_Rx_Buffer , UART0_Rx_Buffer_Array, UART0_BUFFER_SIZE); 
-  pc_buffer_init(&UART0_Tx_Buffer , UART0_Tx_Buffer_Array, UART0_BUFFER_SIZE); 
-  
+  uart0_config_gpio();  
   // Initialize UART0 for 8N1, interrupts enabled.
-  uart_init_115K(
-    UART0_BASE, 
-    SYSCTL_RCGCUART_R0, 
-    SYSCTL_PRUART_R0, 
-    UART0_IRQn,
-    1
-  );
+  uart0_init_115K();
 }
 
 //*****************************************************************************
@@ -113,75 +100,86 @@ void joyStickInit(void)
 		gpio_config_analog_enable(GPIOE_BASE, PE2 | PE3);
 		
 		// configure alternate funtion
-		gpio_config_alternate_function(GPIOE_BASE, PE2 | PE3);	
+		gpio_config_alternate_function(GPIOE_BASE, PE2 | PE3);
+
+		initializeADC(PS2_ADC_BASE);
+
 }
 
 //*****************************************************************************
 //*****************************************************************************
 void rf_init(void)
 {
-  wireless_set_pin_config(
-    RF_SPI_BASE,
-    RF_PAYLOAD_SIZE,
-    RF_CHANNEL,
-    RF_CS_BASE,
-    RF_CS_PIN,
-    RF_CE_GPIO_BASE,
-    RF_CE_PIN
-  );
-  
-  gpio_enable_port(RF_GPIO_BASE);
-  
-  // Configure SPI CLK
-  gpio_config_digital_enable(RF_GPIO_BASE, RF_CLK_PIN);
-  gpio_config_alternate_function(RF_GPIO_BASE, RF_CLK_PIN);
-  gpio_config_port_control(RF_GPIO_BASE, RF_CLK_PIN_PCTL);
-  
-  // Configure SPI MISO
-  gpio_config_digital_enable(RF_GPIO_BASE, RF_MISO_PIN);
-  gpio_config_alternate_function(RF_GPIO_BASE, RF_MISO_PIN);
-  gpio_config_port_control(RF_GPIO_BASE, RF_MISO_PIN_PCTL);
-  
-  // Configure SPI MOSI
-  gpio_config_digital_enable(RF_GPIO_BASE, RF_MOSI_PIN);
-  gpio_config_alternate_function(RF_GPIO_BASE, RF_MOSI_PIN);
-  gpio_config_port_control(RF_GPIO_BASE, RF_MOSI_PIN_PCTL);
-  
-  // Configure CS to be a normal GPIO pin that is controlled 
-  // explicitly by software
-  gpio_config_digital_enable(RF_CS_BASE,RF_CS_PIN);
-  gpio_config_enable_output(RF_CS_BASE,RF_CS_PIN);
-  
-  // Configure CE Pin as an output
-  gpio_enable_port(RF_CE_GPIO_BASE);
-  gpio_config_digital_enable(RF_CE_GPIO_BASE,RF_CE_PIN);
-  gpio_config_enable_output(RF_CE_GPIO_BASE,RF_CE_PIN);
-  
-  
-  initialize_spi(RF_SPI_BASE, 0);
-    
-  RF_CE_PERIH->DATA |= (1 << 1);
+//  wireless_set_pin_config(
+//    RF_SPI_BASE,
+//    RF_PAYLOAD_SIZE,
+//    RF_CHANNEL,
+//    RF_CS_BASE,
+//    RF_CS_PIN,
+//    RF_CE_GPIO_BASE,
+//    RF_CE_PIN
+//  );
+//  
+//  gpio_enable_port(RF_GPIO_BASE);
+//  
+//  // Configure SPI CLK
+//  gpio_config_digital_enable(RF_GPIO_BASE, RF_CLK_PIN);
+//  gpio_config_alternate_function(RF_GPIO_BASE, RF_CLK_PIN);
+//  gpio_config_port_control(RF_GPIO_BASE, RF_CLK_PIN_PCTL);
+//  
+//  // Configure SPI MISO
+//  gpio_config_digital_enable(RF_GPIO_BASE, RF_MISO_PIN);
+//  gpio_config_alternate_function(RF_GPIO_BASE, RF_MISO_PIN);
+//  gpio_config_port_control(RF_GPIO_BASE, RF_MISO_PIN_PCTL);
+//  
+//  // Configure SPI MOSI
+//  gpio_config_digital_enable(RF_GPIO_BASE, RF_MOSI_PIN);
+//  gpio_config_alternate_function(RF_GPIO_BASE, RF_MOSI_PIN);
+//  gpio_config_port_control(RF_GPIO_BASE, RF_MOSI_PIN_PCTL);
+//  
+//  // Configure CS to be a normal GPIO pin that is controlled 
+//  // explicitly by software
+//  gpio_config_digital_enable(RF_CS_BASE,RF_CS_PIN);
+//  gpio_config_enable_output(RF_CS_BASE,RF_CS_PIN);
+//  
+//  // Configure CE Pin as an output
+//  gpio_enable_port(RF_CE_GPIO_BASE);
+//  gpio_config_digital_enable(RF_CE_GPIO_BASE,RF_CE_PIN);
+//  gpio_config_enable_output(RF_CE_GPIO_BASE,RF_CE_PIN);
+//  
+//  
+//  initialize_spi(RF_SPI_BASE, 0);
+//    
+//  RF_CE_PERIH->DATA |= (1 << 1);
   
 
 }
 
 void lcdInit(void)
 {
-		lcd_set_pin_config (SSI0_BASE, GPIOC_BASE, PC7, GPIOA_BASE, PA5);
+		gpio_enable_port(GPIOA_BASE);
+		gpio_enable_port(GPIOC_BASE);
+		gpio_config_digital_enable(GPIOA_BASE, (PA4 | PA2 | PA3 | PA5));
+		gpio_config_digital_enable(GPIOC_BASE, PC7);
+		gpio_config_enable_output(GPIOC_BASE, PC7);
+		gpio_config_enable_output(GPIOA_BASE, (PA4 | PA2 | PA3 | PA5));
+		gpio_config_alternate_function(GPIOA_BASE, (PA2 | PA3 | PA5));
+	
+		
 }
 
 void i2cInit(void)
 {
-	gpio_enable_port(I2C_GPIO_BASE);
-	
-	//configure SCL
-	gpio_config_digital_enable(I2C_GPIO_BASE, I2C_SCL_PIN);
-	gpio_config_alternate_function(I2C_GPIO_BASE, I2C_SCL_PIN);
-	gpio_config_port_control(I2C_GPIO_BASE, I2C_SCL_PIN_PCTL);
-	
-	//configure SDA
-	gpio_config_digital_enable(I2C_GPIO_BASE, I2C_SDA_PIN);
-	gpio_config_open_drain(I2C_GPIO_BASE, I2C_SDA_PIN);
-	gpio_config_alternate_function(I2C_GPIO_BASE, I2C_SDA_PIN);
-	gpio_config_port_control(I2C_GPIO_BASE, I2C_SDA_PIN_PCTL);
+//	gpio_enable_port(I2C_GPIO_BASE);
+//	
+//	//configure SCL
+//	gpio_config_digital_enable(I2C_GPIO_BASE, I2C_SCL_PIN);
+//	gpio_config_alternate_function(I2C_GPIO_BASE, I2C_SCL_PIN);
+//	gpio_config_port_control(I2C_GPIO_BASE, I2C_SCL_PIN_PCTL);
+//	
+//	//configure SDA
+//	gpio_config_digital_enable(I2C_GPIO_BASE, I2C_SDA_PIN);
+//	gpio_config_open_drain(I2C_GPIO_BASE, I2C_SDA_PIN);
+//	gpio_config_alternate_function(I2C_GPIO_BASE, I2C_SDA_PIN);
+//	gpio_config_port_control(I2C_GPIO_BASE, I2C_SDA_PIN_PCTL);
 }

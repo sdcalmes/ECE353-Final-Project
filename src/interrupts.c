@@ -18,8 +18,8 @@ __INLINE static void UART0_Rx_Flow(PC_Buffer *rx_buffer)
   // Remove entries from the RX FIFO until the HW FIFO is empty.
   // Data should be placed in the rx_buffer.
 		while((UART0->FR & UART_FR_RXFE) == 0){
-			if(!pc_buffer_full(&UART0_Rx_Buffer)){
-				pc_buffer_add(&UART0_Rx_Buffer, UART0->DR);
+			if(!pc_buffer_full(rx_buffer)){
+				pc_buffer_add(rx_buffer, UART0->DR);
 			}
 		}
 
@@ -37,12 +37,12 @@ __INLINE static void UART0_Tx_Flow(PC_Buffer *tx_buffer)
       char c;
   
         // Check to see if we have any data in the circular queue
-				if(!pc_buffer_empty(&UART0_Tx_Buffer)){
+				if(!pc_buffer_empty(tx_buffer)){
             // Move data from the circular queue to the hardware FIFO
             // until the hardware FIFO is full or the circular buffer
             // is empty.
-					  while(!(UART0->FR & UART_FR_TXFF) && !pc_buffer_empty(&UART0_Tx_Buffer)){
-							pc_buffer_remove(&UART0_Tx_Buffer,&c);
+					  while( (!pc_buffer_empty(tx_buffer)) && !(UART0->FR & UART_FR_TXFF) ){
+							pc_buffer_remove(tx_buffer,&c);
 							UART0->DR = c;
 						}
 

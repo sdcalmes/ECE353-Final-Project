@@ -24,7 +24,7 @@
 #define __EADOGS102W_H__
 
 #include <stdint.h>
-#include "spi.h"
+#include <stdbool.h>
 #include "fonts.h"
 
 #define NUM_PAGES   8
@@ -40,6 +40,12 @@ typedef struct {
 
 
 //*****************************************************************************
+// Used to configure which SPI and GPIO bases are used to control the LCD.
+// Use the ECE353 daughter board schematic to determine which pins the LCD is
+// connected to.
+// NOTE:  This function does not configure the PINs.  You will need to write
+//
+// your own functions that configure the correct pins as SPI pins and GPIO pins.
 //*****************************************************************************
 void lcd_set_pin_config (
   uint32_t  spi_base, 
@@ -50,41 +56,47 @@ void lcd_set_pin_config (
 ) ;
 
 //*****************************************************************************
+// Used to send a sequence of commands that initializes the LCD so that
+// it is ready to receive data.  This function must be called prior to writing
+// data to the LCD
 //*****************************************************************************
 bool lcd_initialize(void);
 
-  //*****************************************************************************
+//*****************************************************************************
+// Sets the active page to the passed value. Valid values are 0 to 7
 //*****************************************************************************
   bool lcd_set_page(uint8_t   page);
   
 //*****************************************************************************
+// Sets the active column to the value that is passed.  Valid values are 0 to
+// 101
 //*****************************************************************************
 bool lcd_set_column(uint8_t   column);
   
-
 //*****************************************************************************
-//*****************************************************************************
-  bool lcd_write_data(uint8_t   data);
-
-//*****************************************************************************
-//*****************************************************************************
- bool lcd_write_char( uint8_t page, char c);
-
-//*****************************************************************************
-//*****************************************************************************
- bool lcd_write_char_8pts( uint8_t page, char c, uint8_t col_start);
- 
-
-//*****************************************************************************
-//*****************************************************************************
- bool lcd_write_char_10pts( uint8_t page, char c, uint8_t col_start);
- 
- //*****************************************************************************
+// Turns all of the pixels off
 //*****************************************************************************
  void lcd_clear(void);
  
+//*****************************************************************************
+// Writes the byte of data to the LCD at the the currently active columnn and
+// page number
+//*****************************************************************************
+  bool lcd_write_data(uint8_t   data);
+ 
+//*****************************************************************************
+// Writes a ASCII character to the LCD starting at the column specified by
+// col_start.  Each ASCII character requires two pages to display.
+//*****************************************************************************
+ bool lcd_write_char_10pts( uint8_t page, char c, uint8_t col_start);
 
 //*****************************************************************************
+// Writes a character string to LCD.  Strings must be 10 characters or less.
+//
+// The LCD can support up to 4 lines of characters.  
+//
+// The user specifies which line the string will print to by passing a value
+// of 0 through 3 in the line parameter.
 //*****************************************************************************
   void lcd_write_string_10pts( uint8_t line, char *string);
  

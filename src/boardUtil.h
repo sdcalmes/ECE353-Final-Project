@@ -15,6 +15,7 @@
 #include "../include/fonts.h"
 #include "../include/eadogs102w.h"
 #include "pc_buffer.h"
+#include "wireless.h"
 
 #define NULL                0
 #define UNUSED              0

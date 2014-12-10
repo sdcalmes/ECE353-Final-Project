@@ -17,5 +17,3 @@
 .\obj\interrupts.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\obj\interrupts.o: ../include/../include/sysctrl.h
 .\obj\interrupts.o: ../include/adc.h
-.\obj\interrupts.o: ../include/eadogs102w.h
-.\obj\interrupts.o: ../include/fonts.h

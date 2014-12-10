@@ -362,7 +362,7 @@ bool  gpio_config_alternate_function(uint32_t baseAddr, uint8_t pins)
 
 
 //*****************************************************************************
-bool  gpio_config_port_control(uint32_t baseAddr, uint8_t pins)
+bool  gpio_config_port_control(uint32_t baseAddr, uint32_t pins)
 {
   GPIOA_Type  *gpioPort;
 
@@ -380,7 +380,7 @@ bool  gpio_config_port_control(uint32_t baseAddr, uint8_t pins)
 
   // ADD CODE
   // Set the port control register
-  gpioPort->PCTL = pins;
+  gpioPort->PCTL |= pins;
     
   return true;
 }

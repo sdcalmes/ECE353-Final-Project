@@ -2,14 +2,13 @@
 #include "pc_buffer.h"
 #include "../include/uart.h"
 #include "../include/adc.h"
-#include "../include/eadogs102w.h"
 
 extern PC_Buffer UART0_Rx_Buffer;
 extern PC_Buffer UART0_Tx_Buffer;
 extern volatile bool AlertSysTick;
-extern int stickX;
-extern int stickY;
-extern volatile bool ready;
+//extern int stickX;
+//extern int stickY;
+//extern volatile bool ready;
 
 //*****************************************************************************
 // Rx Portion of the UART ISR Handler
@@ -98,15 +97,15 @@ void UART0_Handler(void)
 }
 
 //ADC Handler. Handles the Joystick.
-void ADC0SS3_Handler(void){
-	ADC0_Type* myADC = (ADC0_Type*)ADC0_BASE;
-	
-	ready = true;
-	
-	//Read the X direction from PS2 joystick
-	stickX = myADC->SSFIFO3;
-	
-	//Clear the interrupt
-	myADC->ISC |= ADC_ISC_IN3;
-	
-}
+//void ADC0SS3_Handler(void){
+//	ADC0_Type* myADC = (ADC0_Type*)ADC0_BASE;
+//	
+//	ready = true;
+//	
+//	//Read the X direction from PS2 joystick
+//	stickX = myADC->SSFIFO3;
+//	
+//	//Clear the interrupt
+//	myADC->ISC |= ADC_ISC_IN3;
+//	
+//}

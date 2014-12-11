@@ -42,12 +42,14 @@ void f14_timer0_Init(void){
 		// Write to the Timer Interrupt Clear Register for the specified timer
 		gp_timer->ICR |= TIMER_ICR_TATOCINT;
 		
+		//enable time-out interrupt
+		gp_timer->IMR |= TIMER_IMR_TATOIM;
 		
 		// Enable Timer A using the Timer Control Register
 		gp_timer->CTL |= TIMER_CTL_TAEN;
 		
 		
-		NVIC_SetPriority(TIMER0A_IRQn,0);
+		NVIC_SetPriority(TIMER0A_IRQn,1);
 		NVIC_EnableIRQ(TIMER0A_IRQn);
 		
 		

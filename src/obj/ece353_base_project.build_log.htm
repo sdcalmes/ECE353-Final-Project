@@ -39,21 +39,25 @@ game.h(10): warning:  #1-D: last line of file ends without a newline
   float game4(void);
 main.c(78): warning:  #940-D: missing return statement at end of non-void function "lose_or_win"
   }
-main.c(257): warning:  #111-D: statement is unreachable
-                printf("\n\n****NOW FOR A NEW GAME!****\n\n");
-main.c(95): warning:  #177-D: variable "read_data" was declared but never referenced
+main.c(96): warning:  #177-D: variable "read_data" was declared but never referenced
         uint8_t read_data[EEPROM_BYTES];
-main.c(99): warning:  #177-D: variable "col" was declared but never referenced
+main.c(98): warning:  #177-D: variable "input" was declared but never referenced
+        char input[81];
+main.c(100): warning:  #177-D: variable "col" was declared but never referenced
         int col = 0;
-main.c(100): warning:  #177-D: variable "squares" was declared but never referenced
+main.c(101): warning:  #177-D: variable "squares" was declared but never referenced
         int squares = 4;
-main.c(109): warning:  #177-D: variable "k" was declared but never referenced
+main.c(102): warning:  #177-D: variable "data" was declared but never referenced
+    uint32_t data;
+main.c(103): warning:  #177-D: variable "status" was declared but never referenced
+    uint32_t status;
+main.c(110): warning:  #177-D: variable "k" was declared but never referenced
     int k = 0;
-main.c(110): warning:  #177-D: variable "j" was declared but never referenced
+main.c(111): warning:  #177-D: variable "j" was declared but never referenced
         int j = 0;
-main.c(111): warning:  #550-D: variable "gp_timer" was set but never used
+main.c(112): warning:  #550-D: variable "gp_timer" was set but never used
                 TIMER0_Type *gp_timer;
-main.c(260): warning:  #1-D: last line of file ends without a newline
+main.c(262): warning:  #1-D: last line of file ends without a newline
   }
 main.c(85): warning:  #177-D: variable "button" was declared but never referenced
         int button;
@@ -61,7 +65,7 @@ main.c(86): warning:  #177-D: variable "j" was declared but never referenced
         int j = 1;
 main.c(87): warning:  #177-D: variable "winner" was declared but never referenced
         bool winner = false;
-main.c: 17 warnings, 0 errors
+main.c: 19 warnings, 0 errors
 compiling fonts.c...
 compiling adc.c...
 compiling gpioPort.c...
@@ -79,9 +83,9 @@ compiling wireless.c...
 compiling boardUtil.c...
 ../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
   #endif
-boardUtil.c(198): warning:  #223-D: function "initializeI2CMaster" declared implicitly
+boardUtil.c(197): warning:  #223-D: function "initializeI2CMaster" declared implicitly
         initializeI2CMaster(I2C1_BASE);
-boardUtil.c(199): warning:  #223-D: function "ioExpanderInit" declared implicitly
+boardUtil.c(198): warning:  #223-D: function "ioExpanderInit" declared implicitly
         ioExpanderInit(I2C1_BASE);
 boardUtil.c: 3 warnings, 0 errors
 compiling graphics.c...
@@ -137,7 +141,7 @@ assembling startup_TM4C123.s...
 compiling system_TM4C123.c...
 linking...
 Program Size: Code=17142 RO-data=3898 RW-data=128 ZI-data=4336  
-".\obj\ece353_base_project.axf" - 0 Error(s), 41 Warning(s).
+".\obj\ece353_base_project.axf" - 0 Error(s), 43 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -172,7 +176,12 @@ Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
-se_project.axf" 
+ers\\calmes\\Documents\\GitHub\\ECE353-Final-Project\\src\\obj\\ece353_base_project.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+Load "C:\\Users\\calmes\\Documents\\GitHub\\ECE353-Final-Project\\src\\obj\\ece353_base_project.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.

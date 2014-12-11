@@ -88,6 +88,7 @@ main(void)
 	f14_project_boardUtil();
 	lcd_initialize();
 	lcd_clear();
+			f14_timer0_Init();
 
   // Infinite Loop
   while(1){
@@ -109,9 +110,9 @@ main(void)
   int k = 0;
 	int j = 0;
 		TIMER0_Type *gp_timer;
-	gp_timer = (TIMER0_Type *) TIMER2_BASE;
-		f14_timer0_Init();
+	gp_timer = (TIMER0_Type *) TIMER0_BASE;
 		f14_timer2_Init();
+
 //		f14_timer3_Init();
 //	printf("SEC: %i\n", j*5);
 		//read data
@@ -141,22 +142,23 @@ main(void)
 	WATCHDOG0->ICR = 0;
 	welcome_screen();
 	WATCHDOG0->ICR = 0;
-	printf("Use up, down, and right button to make your selection!\n");
-//	resetScores = start_screen();
+		printf("Use up, down, and right button to make your selection!\n");
+	resetScores = start_screen();
 	WATCHDOG0->ICR = 0;
-//	lcd_clear();
+	lcd_clear();
 	if(resetScores){
 		reset_scores();
 	}
+	SysTick_Config(250000);
 
-	//game1time = game1();//	
+	game1time = game1();//	
 	printf("Game 1 Time: %0.3f Seconds\n",game1time);
 	//send my game 1 time, receive game 1 time, and say who is the winner.
 	//have a running tally of wins.
 //	print_ps2();
-//	game2time	= game2();
+	game2time	= game2();
 	printf("Game 2 Time: %0.3f Seconds\n",game2time);
- // game3time = game3();
+  game3time = game3();
 	printf("Game 3 Time: %0.3f Seconds\n",game3time);
 	
 	total_time = game1time + game2time + game3time;
@@ -185,7 +187,7 @@ main(void)
 		WATCHDOG0->ICR = 0;
 
 
-	while(1){	
+	//while(1){	
 	//Send message to loser/winner.
 //	memset(input,0,81);
 //   printf("Send the loser a message: ");
@@ -198,24 +200,24 @@ main(void)
 //     i++;
 //   }
 //   status = wireless_send_32(false, false, 0);
-		i = 0;
-		  status =  wireless_get_32(false, &data);
-		printf("status: %i\t",status);
-  if(status == NRF24L01_RX_SUCCESS)
-  {
-    input[i] = (char)data;
-		printf("input[i] %i\t",input[i]);
-    if( input[i] == 0)
-    {
-      printf("Received: %s\n\r", input);
-      i = 0;
-      memset(input,0,81);
-    }
-    else
-    {
-      i++;
-    }
-  }
+//		i = 0;
+//		  status =  wireless_get_32(false, &data);
+//		printf("status: %i\t",status);
+//  if(status == NRF24L01_RX_SUCCESS)
+//  {
+//    input[i] = (char)data;
+//		printf("input[i] %i\t",input[i]);
+//    if( input[i] == 0)
+//    {
+//      printf("Received: %s\n\r", input);
+//      i = 0;
+//      memset(input,0,81);
+//    }
+//    else
+//    {
+//      i++;
+//    }
+//  }
     
 
 //	   status =  wireless_get_32(false, &data);
@@ -233,7 +235,7 @@ main(void)
 //      i++;
 //    }
 //  }
- }
+ //}
  
 	 //receive message
  //if(!winner){

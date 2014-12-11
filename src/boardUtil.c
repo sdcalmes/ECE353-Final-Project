@@ -25,7 +25,6 @@ void f14_project_boardUtil(void){
 	joyStickInit();
 	initialize_spi(SSI0_BASE, 3);
 	i2cInit();
-	SysTick_Config(250000);
 	rf_init();
 	wireless_configure_device(myID, remoteID);
 	EnableInterrupts();

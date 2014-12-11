@@ -138,9 +138,11 @@ void WDT0_Handler(void){
 }
 
 void TIMER0A_Handler(void){
-	
-	printf("Packets Received: %i\t\tPackets Lost: %i\n",packets_received, packets_lost);
-	
+		TIMER0_Type *gp_timer;
+	gp_timer = (TIMER0_Type *) TIMER0_BASE;
+
+	printf("Packets Received: %i\tPackets Lost: %i\n",packets_received, packets_lost);
+		gp_timer->ICR = 1;
 	
 }
 

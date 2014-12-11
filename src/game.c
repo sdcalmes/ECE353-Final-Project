@@ -10,8 +10,16 @@
 #include "button_debounce.h"
 #include "timers.h"
 #include "math.h"
+//#include "led_lut.h"
+#include "eeprom.h"
 
-
+volatile bool AlertSysTick;
+volatile bool AlertADC0SS3;
+volatile bool AlertTIMER1A;
+volatile int readingX;
+volatile int readingY;
+extern volatile int squares_caught;
+extern volatile int init_squares;
 
 	//ROUNDING FUNCTION
 double roundF(float val){
@@ -19,6 +27,39 @@ double roundF(float val){
 	nearest = ceil(val * 1000) /1000;
 	return nearest;
 }
+
+
+//Send in time, send it to remote board
+//Get time from remote board, compare the two
+//see who wins
+//void lose_or_win(float score){
+//	int input[10];
+//	uint32_t data;
+//  uint32_t status;
+//  int i = 0;
+//	while(1){
+//	  // Check if any packets have been received
+//  status =  wireless_get_32(false, &data);
+//  if(status == NRF24L01_RX_SUCCESS)
+//  {
+//		printf("Received: %i\n\r", data);
+//    if( input[i] == 0)
+//    {
+//      i = 0;
+//      memset(input,0,10);
+//    }
+//    else
+//    {
+//      i++;
+//    }
+//  }
+
+//	//send data
+//   printf("String to send: %0.3f\n", score);
+//   status = wireless_send_32(false, false, score);
+//   status = wireless_send_32(false, false, 0);
+//	}
+//}
 
 void welcome_screen(void){
 	int button;
@@ -41,7 +82,8 @@ int start_screen(void){
 	int cursorPos = 0;
 	int button;
 	lcd_write_string_10pts(0,"  Start");
-	lcd_write_string_10pts(1,"  HiScores");
+	lcd_write_string_10pts(1,"  Reset");
+	lcd_write_string_10pts(2,"  Scores");
 	square(cursorPos, 5);
 	while(1){
 	button = button_debounce();
@@ -73,8 +115,12 @@ int start_screen(void){
 }
 }
 
-void high_scores(void){
-	
+void reset_scores(void){
+	int i;
+	int EEPROM_BYTES = 4;
+	for(i = 0; i < EEPROM_BYTES; i++){
+			eeprom_byte_write(I2C_I2C_BASE,i,0);
+		}
 	
 	
 }
@@ -90,17 +136,21 @@ float game1(void){
 	int rand_page;
 	int rand_col;
 	float ticks;
+	float time;
 	float mHz = 50000000;
 	int square_curr_page = 4;
 	int square_curr_col = 49;
-	int squares_caught = 0;
+	
 	bool top_square = 1;
 	bool left_square = 1;
 	bool right_square = 1;
 	int seconds = 0;
+	int col = 0;
 	bool bottom_square = 1;
 	TIMER0_Type *gp_timer;
 	gp_timer = (TIMER0_Type *) TIMER1_BASE;
+	init_squares = 4;
+	squares_caught = 0;
 	lcd_write_string_10pts(0,"Game 1!");
 	lcd_write_string_10pts(1, "Press");
 	lcd_write_string_10pts(2, "Buttons to");
@@ -119,6 +169,18 @@ float game1(void){
 	f14_timer1_Init(1);
 		//needs to start a count up timer right now.
 	while(1){
+		WATCHDOG0->ICR = 0;
+//		if(AlertSysTick){
+//			AlertSysTick = false;
+//			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[4-squares_caught][col]);
+//			col++;
+//			col = col % 5;
+//		}
+		//write to eeprom
+//		for(i = 0; i < EEPROM_BYTES; i++){
+//			eeprom_byte_write(I2C_I2C_BASE,i,write_data[i]);
+//		}
+
 		if(gp_timer->RIS == 1){
 			gp_timer->ICR = 1;
 			seconds++;
@@ -187,14 +249,15 @@ float game1(void){
 					//printf("Squares caught: %i",squares_caught);
 					if(squares_caught == 4){
 						//stop timer, send and receive values, check for win/loss
-						ticks = f14_timer0_stop();
+						ticks = f14_timer1_stop();
+						time = (seconds+roundF(ticks/mHz));
 						lcd_clear();
 						lcd_write_string_10pts(0,"Good job!");
 						lcd_write_string_10pts(1,"Time:    ");
 						lcd_write_string_10pts(2,"You win!");
 						for(i = 0; i < 10000000; i++){};
 						lcd_clear();
-						return (seconds+roundF(ticks/mHz));
+						return time;
 					}
 				}
 }	
@@ -213,18 +276,20 @@ float game2(void){
 	float ticks;
 	float mHz = 50000000;
 	int seconds = 0;
-	int squares_caught = 0;
+	
 	bool top_square = 1;
 	bool left_square = 1;
 	bool right_square = 1;
 	bool bottom_square = 1;
 	int square_curr_page = 4;
+	int col = 0;
 	int square_curr_col = 49;
 	TIMER0_Type *gp_timer;
 	gp_timer = (TIMER0_Type *) TIMER1_BASE;
-	xMiddle = (getADCValue(ADC0_BASE, 1)/0x28);
-	yMiddle = (getADCValue(ADC0_BASE, 0)/0x1a2);
-
+	init_squares = 4;
+	squares_caught = 0;
+	xMiddle = (readingX/0x28);
+	yMiddle = (readingY/0x1a2);
 
 	lcd_write_string_10pts(0,"Game 2!");
 	lcd_write_string_10pts(1, "Touch");
@@ -240,6 +305,14 @@ float game2(void){
 //	printf("X Mid: 0x%02x\tY Mid: 0x%02x\n", xMiddle, yMiddle);
 	f14_timer1_Init(1);
 	while(1){
+		WATCHDOG0->ICR = 0;
+//		if(AlertSysTick){
+//			AlertSysTick = false;
+//			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[4-squares_caught][col]);
+//			col++;
+//			col = col % 5;
+//		}
+		
 		if(gp_timer->RIS == 1){
 			gp_timer->ICR = 1;
 			seconds++;
@@ -247,10 +320,14 @@ float game2(void){
 		//printf("RIS: %i\tSeconds: %i\n",gp_timer->TAV, seconds);
 		
 		//basically use it as a digital device...
-		x_data = (getADCValue(ADC0_BASE,1)/0x28);
-		y_data = (getADCValue(ADC0_BASE,0)/0x1a2);
+		if(AlertADC0SS3){
+			x_data = (readingX/0x28);
+			y_data = (readingY/0x1a2);
+		}
+
 //		printf("X Dir: 0x%02x\tY Dir: 0x%02x\r",((x_data)),((y_data)));
 		for(i=0;i<700000; i++){};
+			
 		if(x_data < xMiddle){
 				rm_square(square_curr_page,square_curr_col);
 				if(square_curr_col == 97){
@@ -311,7 +388,7 @@ float game2(void){
 		
 					//printf("Squares caught: %i",squares_caught);
 					if(squares_caught == 4){
-						ticks = f14_timer0_stop();
+						ticks = f14_timer1_stop();
 						//stop timer, send and receive values, check for win/loss
 						lcd_clear();
 						lcd_write_string_10pts(0,"Good job!");
@@ -333,12 +410,16 @@ float game3(void){
 	int buttonPresses = 0;
 	int page;
 	int col = 0;
+	int colFinished = 0;
 	int i;
 	int button;
 	float ticks;
 	float mHz = 50000000;
 	int seconds = 0;
+	int colLED = 0;
 	TIMER0_Type *gp_timer;
+	init_squares = 8;
+	squares_caught = 0;
 	gp_timer = (TIMER0_Type *) TIMER1_BASE;
 	lcd_write_string_10pts(0,"Game 3!");
 	lcd_write_string_10pts(1, "Fill screen");
@@ -350,6 +431,15 @@ float game3(void){
 	f14_timer1_Init(1);
 	//f14_timer0_start(1);
 		while(1){
+			WATCHDOG0->ICR = 0;
+//			if(AlertSysTick){
+//				AlertSysTick = false;
+//				ledMatrixWriteData(I2C_I2C_BASE, colLED, Led_LUT[rows-colFinished][colLED]);
+//				colLED++;
+//				colLED = colLED % 5;
+//		}
+			
+					
 		if(gp_timer->RIS == 1){
 			gp_timer->ICR = 1;
 			seconds++;
@@ -362,11 +452,12 @@ float game3(void){
 				fill_region(page+1,col);
 				buttonPresses+=2;
 				if(buttonPresses % 8 == 0){
+					squares_caught++;
 					col+=13;
 				}
 			}
 			if(buttonPresses == 64){
-				ticks = f14_timer0_stop();
+				ticks = f14_timer1_stop();
 					lcd_clear();
 						lcd_write_string_10pts(0,"Good job!");
 						lcd_write_string_10pts(1,"Time:    ");
@@ -378,6 +469,50 @@ float game3(void){
 	}
 		
 }
+
+//******************************************
+//press left or right based on the side
+//that is lit up.
+//******************************************
+
+//float game4(void){
+//	int buttonPresses = 0;
+//	int col = 0;
+//	int i;
+//	int button;
+//	float ticks;
+//	float mHz = 50000000;
+//	int seconds = 0;
+//	TIMER0_Type *gp_timer;
+//	gp_timer = (TIMER0_Type *) TIMER1_BASE;
+//	lcd_write_string_10pts(0,"Game 4!");
+//	lcd_write_string_10pts(1, "Hit button");
+//	lcd_write_string_10pts(2, "when light");
+//	lcd_write_string_10pts(3, "comes on.");
+//	for(i = 0; i < 10000000; i++){};
+//	lcd_clear();
+//		
+//	f14_timer1_Init(1);
+//	while(1){
+//		
+//		if(gp_timer->RIS == 1){
+//			gp_timer->ICR = 1;
+//			seconds++;
+//		}
+//	}
+//	ledMatrixWriteData(I2C_I2C_BASE, 0, 0x00);
+//	button = button_debounce();
+//		switch(button){
+//			case 2:
+//	
+//				break;
+//			case 1:
+//				
+//				break;
+//				}
+//	
+//	
+//}
 	
 
 	

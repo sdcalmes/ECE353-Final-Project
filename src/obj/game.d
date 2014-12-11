@@ -27,6 +27,7 @@
 .\obj\game.o: pc_buffer.h
 .\obj\game.o: wireless.h
 .\obj\game.o: spi.h
+.\obj\game.o: watchdog.h
 .\obj\game.o: graphics.h
 .\obj\game.o: io_expander.h
 .\obj\game.o: i2c.h
@@ -35,3 +36,4 @@
 .\obj\game.o: game.h
 .\obj\game.o: timers.h
 .\obj\game.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\obj\game.o: eeprom.h

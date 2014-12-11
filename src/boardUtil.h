@@ -16,6 +16,7 @@
 #include "../include/eadogs102w.h"
 #include "pc_buffer.h"
 #include "wireless.h"
+#include "watchdog.h"
 
 #define NULL                0
 #define UNUSED              0
@@ -68,6 +69,7 @@ void pushButtonInit(void);
 void joyStickInit(void);
 void lcdInit(void);
 void i2cInit(void);
+void rf_init(void);
 void f14_project_boardUtil(void);
 
 #endif

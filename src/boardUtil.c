@@ -20,18 +20,18 @@ void EnableInterrupts(void)
 void f14_project_boardUtil(void){
 	DisableInterrupts();
 	serialDebugInit();
-	EnableInterrupts();
 	pushButtonInit();
 	lcdInit();
 	joyStickInit();
 	initialize_spi(SSI0_BASE, 3);
 	i2cInit();
 	SysTick_Config(250000);
+	rf_init();
 	wireless_configure_device(myID, remoteID);
+	EnableInterrupts();
 	
-	
-	printf("\n\r*********************************\n\r");
-	printf("* 2 Player SPEEEED!!\n\r");
+	printf("\n\n\n\r*********************************\n\r");
+	printf("*      2 Player SPEEEED!!    	*\n\r");
 	printf("* My ID:   %02x %02x %02x %02x %02x\n\r",myID[0],myID[1],myID[2],myID[3],myID[4]);
 	printf("* Dest ID: %02x %02x %02x %02x %02x\n\r",remoteID[0],remoteID[1],remoteID[2],remoteID[3],remoteID[4]);
 	printf("*********************************\n\r");
@@ -110,6 +110,10 @@ void joyStickInit(void)
 		gpio_config_alternate_function(GPIOE_BASE, PE2 | PE3);
 
 		initializeADC(ADC0_BASE);
+		initializeADC(ADC1_BASE);
+	
+		//init 10 second watchdog
+		watchdogInit(50000000*10,1);
 
 }
 

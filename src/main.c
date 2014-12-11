@@ -31,29 +31,73 @@
 #include "io_expander.h"
 #include "game.h"
 #include "button_debounce.h"
+#include "watchdog.h"
+#include "timers.h"
+#include "eeprom.h"
+
 
 #define EEPROM_BYTES  4
+
 /******************************************************************************
  * Global Variables
  *****************************************************************************/
+//volatile bool AlertSysTick;
+//volatile uint8_t remoteID[] = {0x00, 0x01, 0x02, 0x03, 0x23};
+//volatile uint8_t myID[] = {0x00, 0x01, 0x02, 0x13, 0x22};
+
+bool lose_or_win(float total_time, bool master){
+	char input[10];
+	uint32_t data;
+	uint32_t status;
+	int i = 0;
+	
+		if(master){
+			printf("Receiving...\n");
+			while(1){
+			status = wireless_get_32(false, &data);
+			if(status == NRF24L01_RX_SUCCESS)
+			{
+				input[i] = (char)data;
+				if(input[i] == 0){
+					printf("Received: %s\n\r", input);
+					i = 0;
+					memset(input,0,10);
+				}
+				else
+				{
+					i++;
+				}
+			}
+		}
+	}
+		if(!master){
+			printf("Sending...\n");
+			status = wireless_send_32(false,false,total_time);
+			status = wireless_send_32(false,false,0);
+		}
+}
 
 int 
 main(void)
 {
 	
-	int hiScores;
+	int resetScores;
 	int button;
-
+	int j = 1;
+	bool winner = false;
 	f14_project_boardUtil();
-
 	lcd_initialize();
+	lcd_clear();
 
   // Infinite Loop
   while(1){
-	uint32_t read_data[EEPROM_BYTES];
-  uint32_t hs_numbers[EEPROM_BYTES];
+		
+	uint8_t read_data[EEPROM_BYTES];
+  uint8_t hs_numbers[EEPROM_BYTES];
 	char input[81];
 	char initials[3];
+	int col = 0;
+	int squares = 4;
   uint32_t data;
   uint32_t status;
 	float game1time;
@@ -61,12 +105,15 @@ main(void)
 	float game3time;
 	float total_time;
 	float avg_time;
-  int i = 0;
-		//write to eeprom
-//		for(i = 0; i < EEPROM_BYTES; i++){
-//			eeprom_byte_write(I2C_I2C_BASE,i,write_data[i]);
-//		}
-
+	int i = 0;
+  int k = 0;
+	int j = 0;
+		TIMER0_Type *gp_timer;
+	gp_timer = (TIMER0_Type *) TIMER2_BASE;
+		f14_timer0_Init();
+		f14_timer2_Init();
+//		f14_timer3_Init();
+//	printf("SEC: %i\n", j*5);
 		//read data
 		for(i = 0; i < EEPROM_BYTES; i++){
 			eeprom_byte_read(I2C_I2C_BASE,i,&(hs_numbers[i]));
@@ -91,50 +138,123 @@ main(void)
   scanf("%80[^\n]", initials);
 	printf("Press right button to begin!\n");
 	lcd_clear();
+	WATCHDOG0->ICR = 0;
 	welcome_screen();
+	WATCHDOG0->ICR = 0;
 	printf("Use up, down, and right button to make your selection!\n");
-	hiScores = start_screen();
-	lcd_clear();
-	if(hiScores){
-		high_scores();
+//	resetScores = start_screen();
+	WATCHDOG0->ICR = 0;
+//	lcd_clear();
+	if(resetScores){
+		reset_scores();
 	}
-	game1time = game1();//	
+
+	//game1time = game1();//	
 	printf("Game 1 Time: %0.3f Seconds\n",game1time);
 	//send my game 1 time, receive game 1 time, and say who is the winner.
 	//have a running tally of wins.
 //	print_ps2();
-	game2time	= game2();
+//	game2time	= game2();
 	printf("Game 2 Time: %0.3f Seconds\n",game2time);
-  game3time = game3();
+ // game3time = game3();
 	printf("Game 3 Time: %0.3f Seconds\n",game3time);
 	
 	total_time = game1time + game2time + game3time;
 	avg_time = total_time / 3;
 	printf("Total Time: %0.3f Seconds\n",total_time);
 	printf("Average Time: %0.3f Seconds\n",avg_time);
+	WATCHDOG0->ICR = 0;
+//	lose_or_win(total_time, 0);
 	//NEW HIGH SCORE
-	if(total_time < hs_numbers[0] || hs_numbers[0] == 0){
+
+	if(total_time < hs_numbers[3] || hs_numbers[3] == 0){
 		for(i = 0; i < EEPROM_BYTES-1; i++){
 			eeprom_byte_write(I2C_I2C_BASE,i,initials[i]);
 		}
 		eeprom_byte_write(I2C_I2C_BASE,3,0x00000000);
 		eeprom_byte_write(I2C_I2C_BASE,3,(int)total_time);
 		printf("\n**********NEW HIGH SCORE***********\n");
+		fill_page(0);
+		fill_page(1);
+		lcd_write_string_10pts(2,"HIGH SCORE");
+		fill_page(2);
+		//fill_page();
+		fill_page(6);
+		fill_page(7);
 	}
-		
-   memset(input,0,81);
-   printf("Send the loser/winner a message: ");
-   scanf("%80[^\n]", input);
+		WATCHDOG0->ICR = 0;
+
+
+	while(1){	
+	//Send message to loser/winner.
+//	memset(input,0,81);
+//   printf("Send the loser a message: ");
+//   scanf("%80[^\n]", input);
+
+//   i = 0;
+//   while(input[k] != 0)
+//   {
+//    status = wireless_send_32(false, false, input[k]);
+//     i++;
+//   }
+//   status = wireless_send_32(false, false, 0);
+		i = 0;
+		  status =  wireless_get_32(false, &data);
+		printf("status: %i\t",status);
+  if(status == NRF24L01_RX_SUCCESS)
+  {
+    input[i] = (char)data;
+		printf("input[i] %i\t",input[i]);
+    if( input[i] == 0)
+    {
+      printf("Received: %s\n\r", input);
+      i = 0;
+      memset(input,0,81);
+    }
+    else
+    {
+      i++;
+    }
+  }
     
-   i = 0;
-   while(input[i] != 0)
-   {
-    status = wireless_send_32(false, false, input[i]);
-     i++;
-   }
-   status = wireless_send_32(false, false, 0);
+
+//	   status =  wireless_get_32(false, &data);
+//  if(status == NRF24L01_RX_SUCCESS)
+//  {
+//    input[i] = (char)data;
+//    if( input[i] == 0)
+//    {
+//      printf("Received: %s\n\r", input);
+//      i = 0;
+//      memset(input,0,81);
+//    }
+//    else
+//    {
+//      i++;
+//    }
+//  }
+ }
+ 
+	 //receive message
+ //if(!winner){
+//	   status =  wireless_get_32(false, &data);
+//  if(status == NRF24L01_RX_SUCCESS)
+//  {
+//    input[j] = (char)data;
+//    if( input[j] == 0)
+//    {
+//      printf("Received: %s\n\r", input);
+//      i = 0;
+//      memset(input,0,81);
+//    }
+//    else
+//    {
+//      i++;
+//    }
+//  }
+//}
  
 		printf("\n\n****NOW FOR A NEW GAME!****\n\n");
-  
   };
+
 }

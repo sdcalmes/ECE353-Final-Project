@@ -525,27 +525,28 @@
 //*****************************************************************************
 void f14_systick_init(void);
 
+//init timer0
+void f14_timer0_Init(void);
+
 //*****************************************************************************
-// Initializes Timer0
+// Initializes Timer1
 //*****************************************************************************
 void f14_timer1_Init(uint32_t ticks);
-  
-//*****************************************************************************
-// Initializes Timer1 but does not start the timer
-//*****************************************************************************
-void f14_timer1_init(void);
   
 //*****************************************************************************
 // Starts Timer1.  
 // Assumes the timer has already been configured using f14_timer1_init()
 //*****************************************************************************
-void f14_timer0_start(uint32_t count);
+void f14_timer1_start(uint32_t count);
+
+void f14_timer2_Init(void);
+void f14_timer3_Init(void);
 
 //*****************************************************************************
 // Stops Timer1
 // Assumes the timer has already been configured using f14_timer1_init()
 //*****************************************************************************
-float f14_timer0_stop(void);
+float f14_timer1_stop(void);
 
 //*****************************************************************************
 // Initializes and starts the SysTick Timer

@@ -26,6 +26,7 @@
 .\obj\button_debounce.o: pc_buffer.h
 .\obj\button_debounce.o: wireless.h
 .\obj\button_debounce.o: spi.h
+.\obj\button_debounce.o: watchdog.h
 .\obj\button_debounce.o: graphics.h
 .\obj\button_debounce.o: io_expander.h
 .\obj\button_debounce.o: i2c.h

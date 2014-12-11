@@ -13,6 +13,7 @@ bool initializeADC(  uint32_t adc_base )
   ADC0_Type  *myADC;
   uint32_t rcgc_adc_mask;
   uint32_t pr_mask;
+	uint32_t AIN;
 
   // examine the adc_base.  Verify that it is either ADC0 or ADC1
   // Set the rcgc_adc_mask and pr_mask  
@@ -26,6 +27,7 @@ bool initializeADC(  uint32_t adc_base )
 			rcgc_adc_mask = SYSCTL_RCGCADC_R0;
       // Set pr_mask 
 			pr_mask = SYSCTL_PRADC_R0;
+			AIN = 1;
       break;
     }
     case ADC1_BASE :
@@ -35,6 +37,7 @@ bool initializeADC(  uint32_t adc_base )
       rcgc_adc_mask = SYSCTL_RCGCADC_R1;
       // Set pr_mask 
 			pr_mask = SYSCTL_PRADC_R1;
+			AIN = 0;
       break;
     }
     
@@ -43,7 +46,7 @@ bool initializeADC(  uint32_t adc_base )
   }
   
   // Turn on the ADC Clock
-  SYSCTL->RCGCADC = rcgc_adc_mask;
+  SYSCTL->RCGCADC |= rcgc_adc_mask;
   
   // Wait for ADCx to become ready
   while( (SYSCTL->PRADC & pr_mask) == 0){}
@@ -59,7 +62,7 @@ bool initializeADC(  uint32_t adc_base )
   // ADD CODE
   // Set the event multiplexer to trigger conversion on a software trigger
   // for sample sequencer #3.
-	myADC->EMUX |= ADC_EMUX_EM3_PROCESSOR;
+	myADC->EMUX |= ADC_EMUX_EM3_TIMER;
   
 	// ADD CODE
   // Set IE0 and END0 in SSCTL3
@@ -67,6 +70,21 @@ bool initializeADC(  uint32_t adc_base )
 	
 	// SAC Use hardware averaging over 16 samples.
 	myADC->SAC = ADC_SAC_AVG_16X;
+		
+			//SSMUX3 convert the desired AIN pin
+		myADC->SSMUX3 = AIN; 
+			
+		//IM
+		myADC->IM = ADC_IM_MASK3;
+		
+		//set priority
+		NVIC_SetPriority(ADC0SS3_IRQn, 1);
+		
+		//enable IRQ
+		NVIC_EnableIRQ(ADC0SS3_IRQn);
+		
+		// ACTSS
+		myADC->ACTSS = ADC_ACTSS_ASEN3;
   return true;
 }
 

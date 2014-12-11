@@ -64,7 +64,7 @@ void ioExpanderInit(uint32_t i2cBase)
 //*****************************************************************************
 void ledMatrixWriteData( uint32_t i2cBase, uint8_t colNum, uint8_t data)
 {
-  if( i2cBase != 0 && colNum <= 4)
+  if( i2cBase != 0 && colNum <= 6)
   {
     
     //==============================================================

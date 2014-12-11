@@ -15,18 +15,18 @@
 	int Right_Data2;
 	int count;
 	int colNum;
-	volatile bool AlertSysTick;
+//	volatile bool AlertSysTick;
 	
 int button_debounce(void){
 	debounce = NULL;
-if(AlertSysTick){
-			count++;
-			count = count % 2;
-			// update the current column for the led Madtrix
-			if(count == 1){
-				colNum++;
-				colNum = colNum % 5;
-			}
+//if(AlertSysTick){
+//			count++;
+//			count = count % 2;
+//			// update the current column for the led Madtrix
+//			if(count == 1){
+//				colNum++;
+//				colNum = colNum % 5;
+//			}
 			
 			
 			
@@ -109,7 +109,7 @@ if(AlertSysTick){
 		//		printf("DownData1: 0x%02x\t DownData2: 0x%02x\n", !Down_Data1, (Down_Data >> 4));
 				if(!Down_Data1 & (Down_Data2 >> 4)){
 					Down_Data = 3;
-				//	printf("DOWN\n");
+					printf("DOWN\n");
 					return Down_Data;
 				}
 			}
@@ -132,5 +132,5 @@ if(AlertSysTick){
 //					printf("DOWN\n");
 //				}
 //			}
-		}
+	//	}
 	}

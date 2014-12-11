@@ -2,13 +2,22 @@
 #include "pc_buffer.h"
 #include "../include/uart.h"
 #include "../include/adc.h"
+#include "../include/eadogs102w.h"
+#include "io_expander.h"
+#include "boardUtil.h"
+#include "led_lut.h"
 
 extern PC_Buffer UART0_Rx_Buffer;
 extern PC_Buffer UART0_Tx_Buffer;
 extern volatile bool AlertSysTick;
-//extern int stickX;
-//extern int stickY;
-//extern volatile bool ready;
+extern volatile bool AlertADC0SS3;
+extern volatile bool AlertTIMER1A;
+extern volatile int readingX;
+extern volatile int readingY;
+volatile int squares_caught;
+volatile int init_squares;
+int packets_received, packets_lost;
+int col = 0;
 
 //*****************************************************************************
 // Rx Portion of the UART ISR Handler
@@ -68,7 +77,12 @@ void SysTick_Handler(void)
  
    // Alert the main application the SysTick Timer has expired
    AlertSysTick = true;
- 
+ 		if(AlertSysTick){
+			AlertSysTick = false;
+			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[init_squares-squares_caught][col]);
+			col++;
+			col = col % 5;
+		}
    // Clears the SysTick Interrupt
    val = SysTick->VAL;
 }
@@ -97,15 +111,58 @@ void UART0_Handler(void)
 }
 
 //ADC Handler. Handles the Joystick.
-//void ADC0SS3_Handler(void){
-//	ADC0_Type* myADC = (ADC0_Type*)ADC0_BASE;
-//	
-//	ready = true;
-//	
-//	//Read the X direction from PS2 joystick
-//	stickX = myADC->SSFIFO3;
-//	
-//	//Clear the interrupt
-//	myADC->ISC |= ADC_ISC_IN3;
-//	
-//}
+void ADC0SS3_Handler(void){
+  ADC0->PSSI = ADC_PSSI_SS3;     // Start SS3
+  ADC1->PSSI = ADC_PSSI_SS3;
+  while( ( (ADC0->RIS) & ADC_RIS_INR3)  == 0)
+  {
+    // wait
+  }
+  
+  readingX = ADC0->SSFIFO3 & ADC_SSFIFO3_DATA_M;    // Read 12-bit data
+	readingY = ADC1->SSFIFO3 & ADC_SSFIFO3_DATA_M;
+	//Clear the interrupt
+  ADC0->ISC |= ADC_ISC_IN3;          // Acknowledge the conversion
+	ADC1->ISC |= ADC_ISC_IN3;
+		AlertADC0SS3 = true;
+	
+}
+
+void WDT0_Handler(void){
+	lcd_clear();	
+	lcd_write_string_10pts(0,"No Input 4");
+	lcd_write_string_10pts(1,"Past 10");
+	lcd_write_string_10pts(2,"seconds.");
+	lcd_write_string_10pts(3,"Resetting.");
+
+}
+
+void TIMER0A_Handler(void){
+	
+	printf("Packets Received: %i\t\tPackets Lost: %i\n",packets_received, packets_lost);
+	
+	
+}
+
+void SSI1_Handler(void){
+	char input[81];
+  uint32_t data;
+  uint32_t status;
+  int i = 0;
+	  // Check if any packets have been received
+  status =  wireless_get_32(false, &data);
+  if(status == NRF24L01_RX_SUCCESS)
+  {
+    input[i] = (char)data;
+    if( input[i] == 0)
+    {
+      printf("Received: %s\n\r", input);
+      i = 0;
+      memset(input,0,81);
+    }
+    else
+    {
+      i++;
+    }
+  }
+}

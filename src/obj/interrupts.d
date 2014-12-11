@@ -17,3 +17,16 @@
 .\obj\interrupts.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\obj\interrupts.o: ../include/../include/sysctrl.h
 .\obj\interrupts.o: ../include/adc.h
+.\obj\interrupts.o: ../include/eadogs102w.h
+.\obj\interrupts.o: ../include/fonts.h
+.\obj\interrupts.o: io_expander.h
+.\obj\interrupts.o: i2c.h
+.\obj\interrupts.o: boardUtil.h
+.\obj\interrupts.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\obj\interrupts.o: ../include/systick.h
+.\obj\interrupts.o: ../include/spi.h
+.\obj\interrupts.o: gpioPort.h
+.\obj\interrupts.o: wireless.h
+.\obj\interrupts.o: spi.h
+.\obj\interrupts.o: watchdog.h
+.\obj\interrupts.o: led_lut.h

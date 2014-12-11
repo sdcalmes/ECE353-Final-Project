@@ -25,3 +25,4 @@
 .\obj\boardutil.o: pc_buffer.h
 .\obj\boardutil.o: wireless.h
 .\obj\boardutil.o: spi.h
+.\obj\boardutil.o: watchdog.h

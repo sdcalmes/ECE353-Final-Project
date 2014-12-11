@@ -25,6 +25,7 @@
 .\obj\main.o: pc_buffer.h
 .\obj\main.o: wireless.h
 .\obj\main.o: spi.h
+.\obj\main.o: watchdog.h
 .\obj\main.o: graphics.h
 .\obj\main.o: io_expander.h
 .\obj\main.o: i2c.h
@@ -32,3 +33,5 @@
 .\obj\main.o: button_debounce.h
 .\obj\main.o: graphics.h
 .\obj\main.o: game.h
+.\obj\main.o: timers.h
+.\obj\main.o: eeprom.h

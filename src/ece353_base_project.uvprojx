@@ -663,6 +663,11 @@
               <FileType>5</FileType>
               <FilePath>.\game.h</FilePath>
             </File>
+            <File>
+              <FileName>recieve.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\recieve.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

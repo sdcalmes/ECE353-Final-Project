@@ -83,9 +83,11 @@ bool lose_or_win(float total_time, bool master){
 wireless_com_status_t string_to_send(char input[]){
 	char sent_input[81];
 	int i;
+
 	wireless_com_status_t TX_status;
 	strcpy( sent_input, input );
-	printf("Sending....\n");
+	
+	printf("string to send is %s\t\t sting that was sent %s", input, sent_input);
 	i = 0;
 	while(sent_input[i] != 0)
 	{
@@ -122,6 +124,7 @@ main(void)
 	char input[81];
 	char initials[3];
 	int col = 0;
+	int to_Send = 5;
 	int squares = 4;
   uint32_t data;
   uint32_t status;
@@ -156,8 +159,10 @@ main(void)
 //		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[3], hs_numbers[3]);
 //		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[4], hs_numbers[4]);
 		printf("*********************************\n\n");
-		input[0] = 5;
-		input[1] = 0;
+	input[0] = 's';
+	input[1] = 'd';
+	input[2] = 'c';
+	input[3] = 0;
 	string_to_send(input);
 	recieved = recieve_data();
 		printf("RECeived: %i\n",recieved);
@@ -189,18 +194,18 @@ main(void)
 //	print_ps2();
 	game2time	= game2();
 	toSend[0] = (int)game2time;
-	string_to_send(toSend);
+//	string_to_send(toSend);
 	recieved = recieve_data();
 
 	printf("Game 2 Time: %0.3f Seconds\n",game2time);
   game3time = game3();
 	toSend[0] = (int)game3time;
-	string_to_send(toSend);
+//	string_to_send(toSend);
 	printf("Game 3 Time: %0.3f Seconds\n",game3time);
 	
 	total_time = game1time + game2time + game3time;
 	toSend[0] = (int)game1time;
-	string_to_send(toSend);
+//	string_to_send(toSend);
 	avg_time = total_time / 3;
 	printf("Total Time: %0.3f Seconds\n",total_time);
 	printf("Average Time: %0.3f Seconds\n",avg_time);

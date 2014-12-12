@@ -8,23 +8,162 @@ Copyright (C) 2014 ARM Ltd and ARM Germany GmbH. All rights reserved.
 License Information: sam calmes, uw madison, LIC=----
  
 Tool Versions:
-Toolchain:       MDK-Lite  Version: <unknown>
-Toolchain Path:  C:\Keil_v5\ARM\ARMCC\bin\
+Toolchain:       MDK-Lite  Version: 5.12.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.05 (build 41)
 Assembler:       Armasm.exe V5.05 (build 41)
 Linker/Locator:  ArmLink.exe V5.05 (build 41)
 Library Manager: ArmAr.exe V5.05 (build 41)
 Hex Converter:   FromElf.exe V5.05 (build 41)
-CPU DLL:         SARMCM3.DLL
-Dialog DLL:      DCM.DLL
-    Target DLL: lmidk-agdi.dll
-Dialog DLL:      TCM.DLL
+CPU DLL:         SARMCM3.DLL V5.12.0.0
+Dialog DLL:      DCM.DLL V1.13.0.0
+Target DLL:      lmidk-agdi.dll V???
+Dialog DLL:      TCM.DLL V1.14.2.0
  
 <h2>Project:</h2>
 C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\ece353_base_project.uvprojx
 Project File Date:  12/12/2014
 
 <h2>Output:</h2>
+Rebuild target 'Target 1'
+compiling main.c...
+../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+graphics.h(12): warning:  #1-D: last line of file ends without a newline
+  void fill_region(int page, int col_start);
+game.h(10): warning:  #1-D: last line of file ends without a newline
+  float game4(void);
+recieve.h(3): warning:  #1-D: last line of file ends without a newline
+  int recieve_data(void);
+main.c(80): warning:  #940-D: missing return statement at end of non-void function "lose_or_win"
+  }
+main.c(125): warning:  #177-D: variable "read_data" was declared but never referenced
+        uint8_t read_data[EEPROM_BYTES];
+main.c(129): warning:  #177-D: variable "col" was declared but never referenced
+        int col = 0;
+main.c(131): warning:  #177-D: variable "squares" was declared but never referenced
+        int squares = 4;
+main.c(132): warning:  #177-D: variable "data" was declared but never referenced
+    uint32_t data;
+main.c(133): warning:  #177-D: variable "status" was declared but never referenced
+    uint32_t status;
+main.c(140): warning:  #177-D: variable "k" was declared but never referenced
+    int k = 0;
+main.c(141): warning:  #177-D: variable "j" was declared but never referenced
+        int j = 0;
+main.c(306): warning:  #1-D: last line of file ends without a newline
+  }
+main.c(110): warning:  #177-D: variable "button" was declared but never referenced
+        int button;
+main.c(111): warning:  #177-D: variable "j" was declared but never referenced
+        int j = 1;
+main.c(112): warning:  #550-D: variable "toSend" was set but never used
+        char toSend[2] = {0, 0};
+main.c(113): warning:  #177-D: variable "winner" was declared but never referenced
+        bool winner = false;
+main.c(115): warning:  #177-D: variable "TX_status" was declared but never referenced
+        uint32_t TX_status;
+main.c: 18 warnings, 0 errors
+compiling fonts.c...
+compiling adc.c...
+compiling gpioPort.c...
+compiling interrupts.c...
+../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+interrupts.c(28): warning:  #550-D: variable "val" was set but never used
+     uint32_t val;
+interrupts.c: 2 warnings, 0 errors
+compiling pc_buffer.c...
+compiling spi.c...
+compiling uart.c...
+compiling watchdog.c...
+compiling wireless.c...
+compiling boardUtil.c...
+../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+boardUtil.c(214): warning:  #223-D: function "initializeI2CMaster" declared implicitly
+        initializeI2CMaster(I2C1_BASE);
+boardUtil.c(215): warning:  #223-D: function "ioExpanderInit" declared implicitly
+        ioExpanderInit(I2C1_BASE);
+boardUtil.c: 3 warnings, 0 errors
+compiling graphics.c...
+../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+graphics.h(12): warning:  #1-D: last line of file ends without a newline
+  void fill_region(int page, int col_start);
+graphics.c: 2 warnings, 0 errors
+compiling eeprom.c...
+eeprom.c(26): warning:  #550-D: variable "status" was set but never used
+    i2c_status_t status;
+eeprom.c: 1 warning, 0 errors
+compiling i2c.c...
+compiling io_expander.c...
+compiling game.c...
+../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
+  #endif
+game.h(10): warning:  #1-D: last line of file ends without a newline
+  float game4(void);
+graphics.h(12): warning:  #1-D: last line of file ends without a newline
+  void fill_region(int page, int col_start);
+game.c(222): warning:  #550-D: variable "rand_page" was set but never used
+        int rand_page;
+game.c(223): warning:  #550-D: variable "rand_col" was set but never used
+        int rand_col;
+game.c(544): warning:  #177-D: variable "colFinished" was declared but never referenced
+        int colFinished = 0;
+game.c: 6 warnings, 0 errors
+compiling button_debounce.c...
+button_debounce.c(190): warning:  #1-D: last line of file ends without a newline
+  ////  }
+button_debounce.c: 1 warning, 0 errors
+compiling timers.c...
+compiling recieve.c...
+recieve.h(3): warning:  #1-D: last line of file ends without a newline
+  int recieve_data(void);
+recieve.c(36): warning:  #1-D: last line of file ends without a newline
+  }
+recieve.c: 2 warnings, 0 errors
+assembling startup_TM4C123.s...
+compiling system_TM4C123.c...
+linking...
+Program Size: Code=18302 RO-data=3898 RW-data=112 ZI-data=4472  
+".\obj\ece353_base_project.axf" - 0 Error(s), 35 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack
+                ARM::CMSIS:CORE:3.40.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 3.40.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.TM4C_DFP.1.0.0.pack
+                Keil::Device:Startup:1.0.0
+                Texas Instruments Tiva C Series Device Support and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\calmes\Documents\GitHub\ECE353-Final-Project\src\RTE
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
 </pre>
 </body>
 </html>
+ocuments\\GitHub\\ECE353-Final-Project\\src\\obj\\ece353_base_project.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+ource\system_TM4C123.c
+Target not created.

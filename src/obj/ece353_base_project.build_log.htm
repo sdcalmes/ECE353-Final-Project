@@ -35,23 +35,23 @@ game.h(10): warning:  #1-D: last line of file ends without a newline
   float game4(void);
 main.c(79): warning:  #940-D: missing return statement at end of non-void function "lose_or_win"
   }
-main.c(123): warning:  #177-D: variable "read_data" was declared but never referenced
+main.c(124): warning:  #177-D: variable "read_data" was declared but never referenced
         uint8_t read_data[EEPROM_BYTES];
-main.c(125): warning:  #177-D: variable "input" was declared but never referenced
+main.c(126): warning:  #177-D: variable "input" was declared but never referenced
         char input[81];
-main.c(127): warning:  #177-D: variable "col" was declared but never referenced
+main.c(128): warning:  #177-D: variable "col" was declared but never referenced
         int col = 0;
-main.c(128): warning:  #177-D: variable "squares" was declared but never referenced
+main.c(129): warning:  #177-D: variable "squares" was declared but never referenced
         int squares = 4;
-main.c(129): warning:  #177-D: variable "data" was declared but never referenced
+main.c(130): warning:  #177-D: variable "data" was declared but never referenced
     uint32_t data;
-main.c(130): warning:  #177-D: variable "status" was declared but never referenced
+main.c(131): warning:  #177-D: variable "status" was declared but never referenced
     uint32_t status;
-main.c(137): warning:  #177-D: variable "k" was declared but never referenced
+main.c(138): warning:  #177-D: variable "k" was declared but never referenced
     int k = 0;
-main.c(138): warning:  #177-D: variable "j" was declared but never referenced
+main.c(139): warning:  #177-D: variable "j" was declared but never referenced
         int j = 0;
-main.c(316): warning:  #1-D: last line of file ends without a newline
+main.c(323): warning:  #1-D: last line of file ends without a newline
   }
 main.c(104): warning:  #177-D: variable "button" was declared but never referenced
         int button;
@@ -59,9 +59,9 @@ main.c(105): warning:  #177-D: variable "j" was declared but never referenced
         int j = 1;
 main.c(107): warning:  #177-D: variable "winner" was declared but never referenced
         bool winner = false;
-main.c(109): warning:  #550-D: variable "alt_recievedData" was set but never used
+main.c(110): warning:  #550-D: variable "alt_recievedData" was set but never used
         char alt_recievedData[54];
-main.c(111): warning:  #177-D: variable "TX_status" was declared but never referenced
+main.c(112): warning:  #177-D: variable "TX_status" was declared but never referenced
         uint32_t TX_status;
 main.c: 18 warnings, 0 errors
 compiling fonts.c...
@@ -120,7 +120,7 @@ compiling timers.c...
 assembling startup_TM4C123.s...
 compiling system_TM4C123.c...
 linking...
-Program Size: Code=18134 RO-data=3898 RW-data=100 ZI-data=4332  
+Program Size: Code=18238 RO-data=3898 RW-data=100 ZI-data=4332  
 ".\obj\ece353_base_project.axf" - 0 Error(s), 33 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -156,3 +156,16 @@ Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
+\4.2.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:3.40.0
+      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
+Target not created.

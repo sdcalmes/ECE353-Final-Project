@@ -1,8 +1,6 @@
 #include "TM4C123GH6PM.h"
 #include "boardUtil.h"
 
-uint8_t remoteID[] = {0x00, 0x01, 0x02, 0x03, 0x23};
-uint8_t myID[] = {0x00, 0x01, 0x02, 0x13, 0x22};
 
 void DisableInterrupts(void)
 {
@@ -26,15 +24,31 @@ void f14_project_boardUtil(void){
 	initialize_spi(SSI0_BASE, 3);
 	i2cInit();
 	rf_init();
-	wireless_configure_device(myID, remoteID);
-		SysTick_Config(250000);
-	EnableInterrupts();
+	initialize_timers();
+	EnableInterrupts();	
 	
-	printf("\n\n\n\r*********************************\n\r");
-	printf("*      2 Player SPEEEED!!    	*\n\r");
-	printf("* My ID:   %02x %02x %02x %02x %02x\n\r",myID[0],myID[1],myID[2],myID[3],myID[4]);
-	printf("* Dest ID: %02x %02x %02x %02x %02x\n\r",remoteID[0],remoteID[1],remoteID[2],remoteID[3],remoteID[4]);
-	printf("*********************************\n\r");
+}
+//*****************************************************************************
+//*****************************************************************************
+void initialize_timers(void)
+{
+	SysTick_Config(250000);
+	f14_timer0_Init();
+	f14_timer4_Init();
+	f14_timer3_Init();
+	//init 10 second watchdog
+	watchdogInit(50000000*100,1);
+
+}
+
+//*****************************************************************************
+//*****************************************************************************
+void serialDebugInit(void)
+{
+  // Configure GPIO Pins
+  uart0_config_gpio();  
+  // Initialize UART0 for 8N1, interrupts enabled.
+  uart0_init_115K();
 }
 
 //*****************************************************************************
@@ -46,16 +60,6 @@ void uart0_config_gpio(void)
    gpio_config_digital_enable( GPIOA_BASE, PA0 | PA1);
    gpio_config_alternate_function( GPIOA_BASE, PA0 | PA1);
    gpio_config_port_control( GPIOA_BASE, GPIO_PCTL_PA0_U0RX | GPIO_PCTL_PA1_U0TX);
-}
-
-//*****************************************************************************
-//*****************************************************************************
-void serialDebugInit(void)
-{
-  // Configure GPIO Pins
-  uart0_config_gpio();  
-  // Initialize UART0 for 8N1, interrupts enabled.
-  uart0_init_115K();
 }
 
 //*****************************************************************************
@@ -112,9 +116,6 @@ void joyStickInit(void)
 		initializeADC(ADC0_BASE);
 		initializeADC(ADC1_BASE);
 	
-		//init 10 second watchdog
-		watchdogInit(50000000*10,1);
-
 }
 
 //*****************************************************************************
@@ -122,6 +123,7 @@ void joyStickInit(void)
 void rf_init(void)
 {
 	GPIOA_Type *gpioPort;
+	
   wireless_set_pin_config(
     RF_SPI_BASE,
     RF_PAYLOAD_SIZE,

@@ -38,46 +38,12 @@
 
 
 #define EEPROM_BYTES  4
-//volatile bool AlertRX;
+volatile bool AlertRX;
 
 /******************************************************************************
  * Global Variables
  *****************************************************************************/
-//volatile bool AlertSysTick;
-//volatile uint8_t remoteID[] = {0x00, 0x01, 0x02, 0x03, 0x23};
-//volatile uint8_t myID[] = {0x00, 0x01, 0x02, 0x13, 0x22};
 
-bool lose_or_win(float total_time, bool master){
-	char input[10];
-	uint32_t data;
-	uint32_t status;
-	int i = 0;
-	
-		if(master){
-			printf("Receiving...\n");
-			while(1){
-			status = wireless_get_32(false, &data);
-			if(status == NRF24L01_RX_SUCCESS)
-			{
-				input[i] = (char)data;
-				if(input[i] == 0){
-					printf("Received: %s\n\r", input);
-					i = 0;
-					memset(input,0,10);
-				}
-				else
-				{
-					i++;
-				}
-			}
-		}
-	}
-		if(!master){
-			printf("Sending...\n");
-			status = wireless_send_32(false,false,total_time);
-			status = wireless_send_32(false,false,0);
-		}
-}
 
 //Send data to other board
 wireless_com_status_t string_to_send(char input[]){
@@ -93,6 +59,7 @@ wireless_com_status_t string_to_send(char input[]){
 	{
 		TX_status = wireless_send_32(false, false, sent_input[i]);
 		i++;
+		printf("TX_STATUS: %i\n",TX_status);
 	}
 	TX_status = wireless_send_32(false, false, 0);
 	
@@ -102,20 +69,32 @@ wireless_com_status_t string_to_send(char input[]){
 int 
 main(void)
 {
-	
+uint8_t remoteID[] = {0x00, 0x01, 0x02, 0x03, 0x23};
+uint8_t myID[] = {0x00, 0x01, 0x02, 0x13, 0x22};
 	int resetScores;
 	int button;
+	int packetsDropped = 0;
 	int j = 1;
 	char toSend[2] = {0, 0};
 	bool winner = false;
 	int recieved;
-	uint32_t TX_status;
+	
+	char sent_input[81];
+	int l = 0;
+	wireless_com_status_t TX_status;
+	
 	f14_project_boardUtil();
 	lcd_initialize();
 	lcd_clear();
-		f14_timer0_Init();
-	f14_timer4_Init();
-	f14_timer3_Init();
+	
+	wireless_configure_device(myID, remoteID);
+	
+	printf("\n\n\n\r*********************************\n\r");
+	printf("*      2 Player SPEEEED!!    	*\n\r");
+	printf("* My ID:   %02x %02x %02x %02x %02x\n\r",myID[0],myID[1],myID[2],myID[3],myID[4]);
+	printf("* Dest ID: %02x %02x %02x %02x %02x\n\r",remoteID[0],remoteID[1],remoteID[2],remoteID[3],remoteID[4]);
+	printf("*********************************\n\r");
+
   // Infinite Loop
   while(1){
 		
@@ -126,94 +105,118 @@ main(void)
 	int col = 0;
 	int to_Send = 5;
 	int squares = 4;
+	int receivedData;
   uint32_t data;
   uint32_t status;
+	
 	float game1time;
 	float game2time;
 	float game3time;
 	float total_time;
 	float avg_time;
+	
 	int i = 0;
   int k = 0;
 	int j = 0;
-//		TIMER0_Type *gp_timer;
-//	gp_timer = (TIMER0_Type *) TIMER2_BASE;
-		f14_timer2_Init();
-	//	f14_timer3_Init();
-//	printf("SEC: %i\n", j*5);
-		//read data
-		for(i = 0; i < EEPROM_BYTES; i++){
+	
+	bool waitForPlayer;
+	char recieved_input[81];
+	char alt_recieved_input[54];
+  uint32_t RX_status;
+	uint32_t TX_status;
+	uint32_t rec_data;
+		
+		
+	f14_timer2_Init();
+	//read data
+	for(i = 0; i < EEPROM_BYTES; i++){
 			eeprom_byte_read(I2C_I2C_BASE,i,&(hs_numbers[i]));
-		}
-		//print data
-		printf("*******Current High Scores*******\n");
-		printf("           *Total Time*\n");
-		printf("     Initials: ");
-		for(i = 0; i < EEPROM_BYTES-1; i++){
+	}
+	//print data
+	printf("*******Current High Scores*******\n");
+	printf("           *Total Time*\n");
+	printf("     Initials: ");
+	for(i = 0; i < EEPROM_BYTES-1; i++){
 			printf("%c",hs_numbers[i]);
-		}
-		printf("\tTime: %i\n",hs_numbers[3]);
-//		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[0], hs_numbers[0]);
-//		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[1], hs_numbers[1]);
-//		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[2], hs_numbers[2]);
-//		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[3], hs_numbers[3]);
-//		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[4], hs_numbers[4]);
-		printf("*********************************\n\n");
-	input[0] = 's';
-	input[1] = 'd';
-	input[2] = 'c';
-	input[3] = 0;
-	string_to_send(input);
-	recieved = recieve_data();
-		printf("RECeived: %i\n",recieved);
+	}
+	printf("\tTime: %i\n",hs_numbers[3]);
+	printf("*********************************\n\n");
+		
 	memset(initials,0,3);
 	lcd_write_string_10pts(0,"Put");
 	lcd_write_string_10pts(1,"Initials");
 	lcd_write_string_10pts(2,"In Console");
+	
 	printf("Set your initials for high scores (3 chars please): ");
   scanf("%80[^\n]", initials);
 	printf("Press right button to begin!\n");
 	lcd_clear();
+	
+	//pet the watchdog
 	WATCHDOG0->ICR = 0;
 	welcome_screen();
+	
 	WATCHDOG0->ICR = 0;
-		printf("Use up, down, and right button to make your selection!\n");
+	printf("Use up, down, and right button to make your selection!\n");
 	resetScores = start_screen();
+	
 	WATCHDOG0->ICR = 0;
 	lcd_clear();
+	
 	if(resetScores){
 		reset_scores();
 	}
 
-	game1time = game1();//
-	toSend[0] = (int)game1time;
-//	string_to_send(toSend);
+	//**********************************************
+	//			GAME 1 
+	//**********************************************
+	game1time = game1();
 	printf("Game 1 Time: %0.3f Seconds\n",game1time);
 	//send my game 1 time, receive game 1 time, and say who is the winner.
 	//have a running tally of wins.
-//	print_ps2();
+	
+	//**********************************************
+	//			GAME 2
+	//**********************************************
 	game2time	= game2();
-	toSend[0] = (int)game2time;
-//	string_to_send(toSend);
-	recieved = recieve_data();
-
+	waitForPlayer = true;
 	printf("Game 2 Time: %0.3f Seconds\n",game2time);
+	
+	//**********************************************
+	//			GAME 3 
+	//**********************************************
   game3time = game3();
-	toSend[0] = (int)game3time;
-//	string_to_send(toSend);
 	printf("Game 3 Time: %0.3f Seconds\n",game3time);
 	
 	total_time = game1time + game2time + game3time;
-	toSend[0] = (int)game1time;
-//	string_to_send(toSend);
+	
 	avg_time = total_time / 3;
+
+	while(wireless_send_32(false, false, total_time) != NRF24L01_TX_SUCCESS){
+		packetsDropped++;
+	}
+
+	
+	waitForPlayer = true;
+	while(waitForPlayer){
+	if(AlertRX){
+		AlertRX = false;
+		while(wireless_get_32(false, &rec_data) != NRF24L01_RX_SUCCESS){};
+			receivedData = rec_data;
+			waitForPlayer = false;
+	 }
+ }
+	if(receivedData > total_time){
+		lcd_write_string_10pts(1,"WINNER!");
+	}
+	
 	printf("Total Time: %0.3f Seconds\n",total_time);
 	printf("Average Time: %0.3f Seconds\n",avg_time);
 	WATCHDOG0->ICR = 0;
-//	lose_or_win(total_time, 0);
-	//NEW HIGH SCORE
-
-	if(total_time < hs_numbers[3] || hs_numbers[3] == 0){
+	
+ 
+ //NEW HIGH SCORE
+    if(total_time < hs_numbers[3] || hs_numbers[3] == 0){
 		for(i = 0; i < EEPROM_BYTES-1; i++){
 			eeprom_byte_write(I2C_I2C_BASE,i,initials[i]);
 		}
@@ -231,76 +234,8 @@ main(void)
 		WATCHDOG0->ICR = 0;
 
 
-	//while(1){	
-	//Send message to loser/winner.
-//	memset(input,0,81);
-//   printf("Send the loser a message: ");
-//   scanf("%80[^\n]", input);
-
-//   i = 0;
-//   while(input[k] != 0)
-//   {
-//    status = wireless_send_32(false, false, input[k]);
-//     i++;
-//   }
-//   status = wireless_send_32(false, false, 0);
-//		i = 0;
-//		  status =  wireless_get_32(false, &data);
-//		printf("status: %i\t",status);
-//  if(status == NRF24L01_RX_SUCCESS)
-//  {
-//    input[i] = (char)data;
-//		printf("input[i] %i\t",input[i]);
-//    if( input[i] == 0)
-//    {
-//      printf("Received: %s\n\r", input);
-//      i = 0;
-//      memset(input,0,81);
-//    }
-//    else
-//    {
-//      i++;
-//    }
-//  }
-    
-
-//	   status =  wireless_get_32(false, &data);
-//  if(status == NRF24L01_RX_SUCCESS)
-//  {
-//    input[i] = (char)data;
-//    if( input[i] == 0)
-//    {
-//      printf("Received: %s\n\r", input);
-//      i = 0;
-//      memset(input,0,81);
-//    }
-//    else
-//    {
-//      i++;
-//    }
-//  }
- //}
- 
-	 //receive message
- //if(!winner){
-//	   status =  wireless_get_32(false, &data);
-//  if(status == NRF24L01_RX_SUCCESS)
-//  {
-//    input[j] = (char)data;
-//    if( input[j] == 0)
-//    {
-//      printf("Received: %s\n\r", input);
-//      i = 0;
-//      memset(input,0,81);
-//    }
-//    else
-//    {
-//      i++;
-//    }
-//  }
-//}
  
 		printf("\n\n****NOW FOR A NEW GAME!****\n\n");
-  };
+  }
 
 }

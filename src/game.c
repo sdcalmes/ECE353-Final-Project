@@ -35,39 +35,6 @@ double roundF(float val){
 	return nearest;
 }
 
-
-//Send in time, send it to remote board
-//Get time from remote board, compare the two
-//see who wins
-//void lose_or_win(float score){
-//	int input[10];
-//	uint32_t data;
-//  uint32_t status;
-//  int i = 0;
-//	while(1){
-//	  // Check if any packets have been received
-//  status =  wireless_get_32(false, &data);
-//  if(status == NRF24L01_RX_SUCCESS)
-//  {
-//		printf("Received: %i\n\r", data);
-//    if( input[i] == 0)
-//    {
-//      i = 0;
-//      memset(input,0,10);
-//    }
-//    else
-//    {
-//      i++;
-//    }
-//  }
-
-//	//send data
-//   printf("String to send: %0.3f\n", score);
-//   status = wireless_send_32(false, false, score);
-//   status = wireless_send_32(false, false, 0);
-//	}
-//}
-
 void welcome_screen(void){
 
   lcd_write_string_10pts(0,"2 Player");
@@ -207,9 +174,7 @@ void reset_scores(void){
 	int EEPROM_BYTES = 4;
 	for(i = 0; i < EEPROM_BYTES; i++){
 			eeprom_byte_write(I2C_I2C_BASE,i,0);
-		}
-	
-	
+	}
 }
 
 //*******************************************
@@ -237,13 +202,17 @@ float game1(void){
 	gp_timer = (TIMER0_Type *) TIMER1_BASE;
 	init_squares = 4;
 	squares_caught = 0;
+	
+	// print welcome screen
 	lcd_write_string_10pts(0,"Game 1!");
 	lcd_write_string_10pts(1, "Press");
 	lcd_write_string_10pts(2, "Buttons to");
 	lcd_write_string_10pts(3, "Move!");
+	// besy wait for the screen to display
 	for(i = 0; i < 10000000; i++){};
+	
 	lcd_clear();
-	//srand(time(NULL));
+	
 	rand_page = (rand()%7);
 	rand_col = (rand()%90);
 	square(0,49);
@@ -252,8 +221,10 @@ float game1(void){
 	square(5, 13);
 	
 	square_out(square_curr_page, square_curr_col);
+	
+	//start the game timer
 	f14_timer1_Init(1);
-		//needs to start a count up timer right now.
+	//needs to start a count up timer right now.
 	while(1){
 		WATCHDOG0->ICR = 0;
 		if(matrixWrite){
@@ -372,21 +343,18 @@ float game1(void){
 			squares_caught++;
 			bottom_square = 0;
 		}
-		
-					//printf("Squares caught: %i",squares_caught);
-					if(squares_caught == 4){
-						//stop timer, send and receive values, check for win/loss
-						ticks = f14_timer1_stop();
-						time = (seconds+roundF(ticks/mHz));
-						lcd_clear();
-						lcd_write_string_10pts(0,"Good job!");
-						lcd_write_string_10pts(1,"Time:    ");
-						lcd_write_string_10pts(2,"You win!");
-						for(i = 0; i < 10000000; i++){};
-						lcd_clear();
-						return time;
-					}
-				}
+		if(squares_caught == 4){
+			ticks = f14_timer1_stop();
+			time = (seconds+roundF(ticks/mHz));
+			lcd_clear();
+			lcd_write_string_10pts(0,"Good job!");
+			lcd_write_string_10pts(1,"Time:    ");
+			lcd_write_string_10pts(2,"You win!");
+			for(i = 0; i < 10000000; i++){};
+			lcd_clear();
+			return time;
+		}
+	}	
 }	
 
 //*************************************
@@ -418,18 +386,22 @@ float game2(void){
 	xMiddle = (readingX/0x28);
 	yMiddle = (readingY/0x1a2);
 
+	// display welcome screen
 	lcd_write_string_10pts(0,"Game 2!");
 	lcd_write_string_10pts(1, "Touch");
 	lcd_write_string_10pts(2, "Stick to");
 	lcd_write_string_10pts(3, "Move!");
 	for(i = 0; i < 10000000; i++){};
+	
+	// place squares
 	lcd_clear();
 	square(1,13);
 	square(7, 73);
 	square(1, 97);
 	square(6, 1);
 	square_out(square_curr_page, square_curr_col);
-//	printf("X Mid: 0x%02x\tY Mid: 0x%02x\n", xMiddle, yMiddle);
+
+	// start game timer
 	f14_timer1_Init(1);
 	while(1){
 		WATCHDOG0->ICR = 0;
@@ -446,18 +418,12 @@ float game2(void){
 			gp_timer->ICR = 1;
 			seconds++;
 		}
-		//printf("RIS: %i\tSeconds: %i\n",gp_timer->TAV, seconds);
 		
-		//basically use it as a digital device...
 		if(joyStickUpdate){
 			x_data = (readingX/0x28);
 			y_data = (readingY/0x1a2);
-			//printf("XMid: 0x%02x\tXNow: 0x%02x\n",xMiddle,x_data);
 			joyStickUpdate = false;
 		}
-
-//		printf("X Dir: 0x%02x\tY Dir: 0x%02x\r",((x_data)),((y_data)));
-	//	for(i=0;i<700000; i++){};
 			
 		if(x_data < xMiddle){
 				rm_square(square_curr_page,square_curr_col);
@@ -500,7 +466,7 @@ float game2(void){
 				square_out(square_curr_page,square_curr_col);
 		}
 		
-				if((square_curr_page == 1) && (square_curr_col == 13) && top_square){
+		if((square_curr_page == 1) && (square_curr_col == 13) && top_square){
 			squares_caught++;
 			top_square = 0;
 		}
@@ -517,18 +483,18 @@ float game2(void){
 			bottom_square = 0;
 		}
 		
-					//printf("Squares caught: %i",squares_caught);
-					if(squares_caught == 4){
-						ticks = f14_timer1_stop();
-						//stop timer, send and receive values, check for win/loss
-						lcd_clear();
-						lcd_write_string_10pts(0,"Good job!");
-						lcd_write_string_10pts(1,"Time:    ");
-						lcd_write_string_10pts(2,"You win!");
-						for(i = 0; i < 10000000; i++){};
-						lcd_clear();
-						return (seconds+roundF(ticks/mHz));
-					}
+		//printf("Squares caught: %i",squares_caught);
+		if(squares_caught == 4){
+			ticks = f14_timer1_stop();
+			//stop timer, send and receive values, check for win/loss
+			lcd_clear();
+			lcd_write_string_10pts(0,"Good job!");
+			lcd_write_string_10pts(1,"Time:    ");
+			lcd_write_string_10pts(2,"You win!");
+			for(i = 0; i < 10000000; i++){};
+			lcd_clear();
+			return (seconds+roundF(ticks/mHz));
+		}
 	}
 }
 
@@ -567,55 +533,55 @@ float game3(void){
 				ledMatrixWriteData(I2C_I2C_BASE, colLED, Led_LUT[init_squares-squares_caught][colLED]);
 				colLED++;
 				colLED = colLED % 5;
-		}
-					button = -1;
-		if(AlertSysTick){
-			data = GPIOF->DATA;
-			if( (data & PA1) == 0)
-			{
-				up++;
-				if(up == 7)
-					button = 0;
-			}
-			else
-				up = 0;
-			
-			if( (data & PA4) == 0)
-			{
-				down++;
-				if(down == 7)
-					button = 3;
-					
-			}
-			else
-				down = 0;
-			
-			if( (data & PA2) == 0)
-			{
-				right++;
-				if(right == 7)
-					button = 1;
-			}
-			else
-				right = 0;
-			
-			if( (data & PA3) == 0)
-			{
-				left++;
-				if(left == 7)
-					button = 2;
-			}
-			else
-				left = 0;
-
-			AlertSysTick = false;
-		}
+		 }
+		 button = -1;
+			if(AlertSysTick){
+				data = GPIOF->DATA;
+				if( (data & PA1) == 0)
+				{
+					up++;
+					if(up == 7)
+						button = 0;
+				}
+				else
+					up = 0;
+				
+				if( (data & PA4) == 0)
+				{
+					down++;
+					if(down == 7)
+						button = 3;
 						
-		if(gp_timer->RIS == 1){
-			gp_timer->ICR = 1;
-			seconds++;
-		}
-		//	printf("\nCurrTicks: %f\r", timer0_get_ticks());
+				}
+				else
+					down = 0;
+				
+				if( (data & PA2) == 0)
+				{
+					right++;
+					if(right == 7)
+						button = 1;
+				}
+				else
+					right = 0;
+				
+				if( (data & PA3) == 0)
+				{
+					left++;
+					if(left == 7)
+						button = 2;
+				}
+				else
+					left = 0;
+
+				AlertSysTick = false;
+			}
+						
+			if(gp_timer->RIS == 1){
+				gp_timer->ICR = 1;
+				seconds++;
+			}
+		
 			if(button == 0){
 				page = (buttonPresses % 8);
 				fill_region(page,col);
@@ -628,16 +594,15 @@ float game3(void){
 			}
 			if(buttonPresses == 64){
 				ticks = f14_timer1_stop();
-					lcd_clear();
-						lcd_write_string_10pts(0,"Good job!");
-						lcd_write_string_10pts(1,"Time:    ");
-						lcd_write_string_10pts(2,"You win!");
-						for(i = 0; i < 10000000; i++){};
-						lcd_clear();
-						return (seconds+roundF(ticks/mHz));
+				lcd_clear();
+				lcd_write_string_10pts(0,"Good job!");
+				lcd_write_string_10pts(1,"Time:    ");
+				lcd_write_string_10pts(2,"You win!");
+				for(i = 0; i < 10000000; i++){};
+				lcd_clear();
+				return (seconds+roundF(ticks/mHz));
+			}
 		}
-	}
-		
 }
 
 //******************************************

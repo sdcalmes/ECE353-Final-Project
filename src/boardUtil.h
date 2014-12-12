@@ -71,5 +71,6 @@ void lcdInit(void);
 void i2cInit(void);
 void rf_init(void);
 void f14_project_boardUtil(void);
+void initialize_timers(void);
 
 #endif

@@ -35,35 +35,51 @@ game.h(10): warning:  #1-D: last line of file ends without a newline
   float game4(void);
 recieve.h(3): warning:  #1-D: last line of file ends without a newline
   int recieve_data(void);
-main.c(80): warning:  #940-D: missing return statement at end of non-void function "lose_or_win"
-  }
-main.c(125): warning:  #177-D: variable "read_data" was declared but never referenced
+main.c(101): warning:  #177-D: variable "read_data" was declared but never referenced
         uint8_t read_data[EEPROM_BYTES];
-main.c(129): warning:  #177-D: variable "col" was declared but never referenced
+main.c(103): warning:  #177-D: variable "input" was declared but never referenced
+        char input[81];
+main.c(105): warning:  #177-D: variable "col" was declared but never referenced
         int col = 0;
-main.c(131): warning:  #177-D: variable "squares" was declared but never referenced
+main.c(106): warning:  #177-D: variable "to_Send" was declared but never referenced
+        int to_Send = 5;
+main.c(107): warning:  #177-D: variable "squares" was declared but never referenced
         int squares = 4;
-main.c(132): warning:  #177-D: variable "data" was declared but never referenced
+main.c(109): warning:  #177-D: variable "data" was declared but never referenced
     uint32_t data;
-main.c(133): warning:  #177-D: variable "status" was declared but never referenced
+main.c(110): warning:  #177-D: variable "status" was declared but never referenced
     uint32_t status;
-main.c(140): warning:  #177-D: variable "k" was declared but never referenced
+main.c(119): warning:  #177-D: variable "k" was declared but never referenced
     int k = 0;
-main.c(141): warning:  #177-D: variable "j" was declared but never referenced
+main.c(120): warning:  #177-D: variable "j" was declared but never referenced
         int j = 0;
-main.c(306): warning:  #1-D: last line of file ends without a newline
-  }
-main.c(110): warning:  #177-D: variable "button" was declared but never referenced
-        int button;
-main.c(111): warning:  #177-D: variable "j" was declared but never referenced
-        int j = 1;
-main.c(112): warning:  #550-D: variable "toSend" was set but never used
-        char toSend[2] = {0, 0};
-main.c(113): warning:  #177-D: variable "winner" was declared but never referenced
-        bool winner = false;
-main.c(115): warning:  #177-D: variable "TX_status" was declared but never referenced
+main.c(123): warning:  #177-D: variable "recieved_input" was declared but never referenced
+        char recieved_input[81];
+main.c(124): warning:  #177-D: variable "alt_recieved_input" was declared but never referenced
+        char alt_recieved_input[54];
+main.c(125): warning:  #177-D: variable "RX_status" was declared but never referenced
+    uint32_t RX_status;
+main.c(126): warning:  #177-D: variable "TX_status" was declared but never referenced
         uint32_t TX_status;
-main.c: 18 warnings, 0 errors
+main.c(241): warning:  #1-D: last line of file ends without a newline
+  }
+main.c(75): warning:  #177-D: variable "button" was declared but never referenced
+        int button;
+main.c(77): warning:  #177-D: variable "j" was declared but never referenced
+        int j = 1;
+main.c(78): warning:  #177-D: variable "toSend" was declared but never referenced
+        char toSend[2] = {0, 0};
+main.c(79): warning:  #177-D: variable "winner" was declared but never referenced
+        bool winner = false;
+main.c(80): warning:  #177-D: variable "recieved" was declared but never referenced
+        int recieved;
+main.c(82): warning:  #177-D: variable "sent_input" was declared but never referenced
+        char sent_input[81];
+main.c(83): warning:  #177-D: variable "l" was declared but never referenced
+        int l = 0;
+main.c(84): warning:  #177-D: variable "TX_status" was declared but never referenced
+        wireless_com_status_t TX_status;
+main.c: 26 warnings, 0 errors
 compiling fonts.c...
 compiling adc.c...
 compiling gpioPort.c...
@@ -81,11 +97,19 @@ compiling wireless.c...
 compiling boardUtil.c...
 ../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
   #endif
-boardUtil.c(214): warning:  #223-D: function "initializeI2CMaster" declared implicitly
+boardUtil.c(36): warning:  #223-D: function "f14_timer0_Init" declared implicitly
+        f14_timer0_Init();
+boardUtil.c(37): warning:  #223-D: function "f14_timer4_Init" declared implicitly
+        f14_timer4_Init();
+boardUtil.c(38): warning:  #223-D: function "f14_timer3_Init" declared implicitly
+        f14_timer3_Init();
+boardUtil.c(40): warning:  #61-D: integer operation result is out of range
+        watchdogInit(50000000*100,1);
+boardUtil.c(216): warning:  #223-D: function "initializeI2CMaster" declared implicitly
         initializeI2CMaster(I2C1_BASE);
-boardUtil.c(215): warning:  #223-D: function "ioExpanderInit" declared implicitly
+boardUtil.c(217): warning:  #223-D: function "ioExpanderInit" declared implicitly
         ioExpanderInit(I2C1_BASE);
-boardUtil.c: 3 warnings, 0 errors
+boardUtil.c: 7 warnings, 0 errors
 compiling graphics.c...
 ../include/eadogs102w.h(103): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -105,29 +129,24 @@ game.h(10): warning:  #1-D: last line of file ends without a newline
   float game4(void);
 graphics.h(12): warning:  #1-D: last line of file ends without a newline
   void fill_region(int page, int col_start);
-game.c(222): warning:  #550-D: variable "rand_page" was set but never used
+game.c(187): warning:  #550-D: variable "rand_page" was set but never used
         int rand_page;
-game.c(223): warning:  #550-D: variable "rand_col" was set but never used
+game.c(188): warning:  #550-D: variable "rand_col" was set but never used
         int rand_col;
-game.c(544): warning:  #177-D: variable "colFinished" was declared but never referenced
+game.c(510): warning:  #177-D: variable "colFinished" was declared but never referenced
         int colFinished = 0;
 game.c: 6 warnings, 0 errors
 compiling button_debounce.c...
-button_debounce.c(190): warning:  #1-D: last line of file ends without a newline
-  ////  }
-button_debounce.c: 1 warning, 0 errors
 compiling timers.c...
 compiling recieve.c...
-recieve.h(3): warning:  #1-D: last line of file ends without a newline
-  int recieve_data(void);
-recieve.c(36): warning:  #1-D: last line of file ends without a newline
-  }
-recieve.c: 2 warnings, 0 errors
+recieve.c(53): warning:  #1-D: last line of file ends without a newline
+  //    }
+recieve.c: 1 warning, 0 errors
 assembling startup_TM4C123.s...
 compiling system_TM4C123.c...
 linking...
-Program Size: Code=18302 RO-data=3898 RW-data=112 ZI-data=4472  
-".\obj\ece353_base_project.axf" - 0 Error(s), 35 Warning(s).
+Program Size: Code=18022 RO-data=3898 RW-data=88 ZI-data=4336  
+".\obj\ece353_base_project.axf" - 0 Error(s), 45 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -157,13 +176,8 @@ Package Vendor: Keil
       Include file:  Device\Include\TM4C123\TM4C123.h
       Source file:   Device\Source\ARM\startup_TM4C123.s
       Source file:   Device\Source\system_TM4C123.c
-</pre>
-</body>
-</html>
-ocuments\\GitHub\\ECE353-Final-Project\\src\\obj\\ece353_base_project.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-ource\system_TM4C123.c
+ice:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
+      Source file:   Device\Source\ARM\startup_TM4C123.s
+      Source file:   Device\Source\system_TM4C123.c
 Target not created.

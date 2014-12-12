@@ -21,6 +21,42 @@ int packets_lost;
 int col = 0;
 
 //*****************************************************************************
+// SysTick Interrupt Service handler 
+//*****************************************************************************
+void SysTick_Handler(void)
+{
+   uint32_t val;
+ 
+   // Alert the main application the SysTick Timer has expired
+   AlertSysTick = true;
+
+   val = SysTick->VAL;
+}
+
+//*****************************************************************************
+// WatchDog0 Interrupt Service handler used to restart program
+//*****************************************************************************
+void WDT0_Handler(void){
+	lcd_clear();	
+	lcd_write_string_10pts(0,"No Input 4");
+	lcd_write_string_10pts(1,"Past 10");
+	lcd_write_string_10pts(2,"seconds.");
+	lcd_write_string_10pts(3,"Resetting.");
+
+}
+
+//*****************************************************************************
+// TIMER0A Interrupt Service handler used for packet statistics
+//*****************************************************************************
+void TIMER0A_Handler(void){
+	TIMER0_Type *gp_timer;
+	gp_timer = (TIMER0_Type *) TIMER0_BASE;
+	printf("Packets Received: %i\tPackets Lost: %i\n",packets_received, packets_lost);
+	gp_timer->ICR = 1;
+	
+}
+
+//*****************************************************************************
 // Rx Portion of the UART ISR Handler
 //*****************************************************************************
 __INLINE static void UART0_Rx_Flow(PC_Buffer *rx_buffer)
@@ -71,25 +107,8 @@ __INLINE static void UART0_Tx_Flow(PC_Buffer *tx_buffer)
 
 }
 
-// SysTick Handler
-void SysTick_Handler(void)
-{
-   uint32_t val;
- 
-   // Alert the main application the SysTick Timer has expired
-   AlertSysTick = true;
-// 		if(AlertSysTick){
-//			AlertSysTick = false;
-//			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[init_squares-squares_caught][col]);
-//			col++;
-//			col = col % 5;
-//		}
-   // Clears the SysTick Interrupt
-   val = SysTick->VAL;
-}
-
 //*****************************************************************************
-// UART0 Interrupt Service handler
+// UART0 Interrupt Service handler 
 //*****************************************************************************
 void UART0_Handler(void)
 {
@@ -111,7 +130,9 @@ void UART0_Handler(void)
     return;
 }
 
-//ADC Handler. Handles the Joystick.
+//*****************************************************************************
+// ADC Interrupt Service handler that handles sampling the joystick data
+//*****************************************************************************
 void ADC0SS3_Handler(void){
   ADC0->PSSI = ADC_PSSI_SS3;     // Start SS3
   ADC1->PSSI = ADC_PSSI_SS3;
@@ -123,30 +144,15 @@ void ADC0SS3_Handler(void){
   readingX = ADC0->SSFIFO3 & ADC_SSFIFO3_DATA_M;    // Read 12-bit data
 	readingY = ADC1->SSFIFO3 & ADC_SSFIFO3_DATA_M;
 	//Clear the interrupt
-  ADC0->ISC |= ADC_ISC_IN3;          // Acknowledge the conversion
+  ADC0->ISC |= ADC_ISC_IN3;
 	ADC1->ISC |= ADC_ISC_IN3;
-		AlertADC0SS3 = true;
+	AlertADC0SS3 = true;
 	
 }
 
-void WDT0_Handler(void){
-	lcd_clear();	
-	lcd_write_string_10pts(0,"No Input 4");
-	lcd_write_string_10pts(1,"Past 10");
-	lcd_write_string_10pts(2,"seconds.");
-	lcd_write_string_10pts(3,"Resetting.");
-
-}
-
-void TIMER0A_Handler(void){
-	TIMER0_Type *gp_timer;
-	gp_timer = (TIMER0_Type *) TIMER0_BASE;
-	printf("Packets Received: %i\tPackets Lost: %i\n",packets_received, packets_lost);
-	gp_timer->ICR = 1;
-	
-}
-
-//matrix timer
+//*****************************************************************************
+// TIMER3A Interrupt Service handler the matrix updater
+//*****************************************************************************
 void TIMER3A_Handler(void){
 	TIMER0_Type *gp_timer;
 	gp_timer = (TIMER0_Type *) TIMER3_BASE;
@@ -155,7 +161,9 @@ void TIMER3A_Handler(void){
 	
 }
 
-//joystick timer
+//*****************************************************************************
+// TIMER4A Interrupt Service handler for Joystick movement
+//*****************************************************************************
 void TIMER4A_Handler(void){
 	TIMER0_Type *gp_timer;
 	gp_timer = (TIMER0_Type *) TIMER4_BASE;
@@ -163,7 +171,11 @@ void TIMER4A_Handler(void){
 	joyStickUpdate = true;
 }
 
+//*****************************************************************************
+// GPIOD Interrupt Service handler for RX intrrupts
+//*****************************************************************************
 void GPIOD_Handler(void){
+	printf("You entered the RX handler\n\r");
 	AlertRX = true;
 	GPIOD->ICR |= PD7;
 }

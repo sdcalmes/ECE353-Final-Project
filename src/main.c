@@ -73,7 +73,6 @@ uint8_t remoteID[] = {0x00, 0x01, 0x02, 0x03, 0x23};
 uint8_t myID[] = {0x00, 0x01, 0x02, 0x13, 0x22};
 	int resetScores;
 	int button;
-	int packetsDropped = 0;
 	int j = 1;
 	char toSend[2] = {0, 0};
 	bool winner = false;
@@ -193,7 +192,7 @@ uint8_t myID[] = {0x00, 0x01, 0x02, 0x13, 0x22};
 	avg_time = total_time / 3;
 
 	while(wireless_send_32(false, false, total_time) != NRF24L01_TX_SUCCESS){
-		packetsDropped++;
+		//packetsDropped++;
 	}
 
 	

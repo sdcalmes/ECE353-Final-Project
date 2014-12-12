@@ -5,6 +5,7 @@
 #include "../include/eadogs102w.h"
 #include "io_expander.h"
 #include "boardUtil.h"
+#include "timers.h"
 
 extern PC_Buffer UART0_Rx_Buffer;
 extern PC_Buffer UART0_Tx_Buffer;
@@ -16,6 +17,7 @@ extern volatile int readingY;
 extern volatile bool matrixWrite;
 extern volatile bool joyStickUpdate;
 extern volatile bool AlertRX;
+extern volatile bool sendPackets;
 int packets_received;
 int packets_lost;
 int col = 0;
@@ -172,10 +174,19 @@ void TIMER4A_Handler(void){
 }
 
 //*****************************************************************************
+// TIMER5A ISR For Sending Packets
+//*****************************************************************************
+void TIMER5A_Handler(void) {
+	TIMER0_Type *gp_timer = (TIMER0_Type *)TIMER5_BASE;
+	sendPackets = true;
+	gp_timer->ICR |= TIMER_ICR_TATOCINT;
+}
+//*****************************************************************************
 // GPIOD Interrupt Service handler for RX intrrupts
 //*****************************************************************************
 void GPIOD_Handler(void){
-	printf("You entered the RX handler\n\r");
+	GPIOA_Type *gpioPort = (GPIOA_Type *) GPIOD_BASE;
 	AlertRX = true;
-	GPIOD->ICR |= PD7;
+	gpioPort->ICR |= PD7;
+	WATCHDOG0->ICR = 0x01;
 }

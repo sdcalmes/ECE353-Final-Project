@@ -37,7 +37,7 @@ void initialize_timers(void)
 	f14_timer4_Init();
 	f14_timer3_Init();
 	//init 10 second watchdog
-	watchdogInit(50000000*100,1);
+	watchdogInit(50000000*10,1);
 
 }
 

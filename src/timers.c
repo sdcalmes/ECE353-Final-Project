@@ -238,6 +238,30 @@ void f14_timer4_Init(){
 		
 }
 
+//Timer 5 for sending packets
+void project_timer5_Init(void){
+	TIMER0_Type *gp_timer;
+	gp_timer = (TIMER0_Type *)TIMER5_BASE;
+	SYSCTL->RCGCTIMER |= SYSCTL_RCGCTIMER_R5;
+	
+	while( (SYSCTL->PRTIMER & SYSCTL_PRTIMER_R5) == 0) {};
+	
+		
+	gp_timer->CTL = 0;
+		gp_timer->CFG = TIMER_CFG_32_BIT_TIMER;
+		gp_timer->TAMR = TIMER_TAMR_TAMR_PERIOD;
+		gp_timer->TAMR &= ~(TIMER_TAMR_TACDIR);
+		
+		gp_timer->TAILR = 50000000;
+		
+		gp_timer->IMR |= 0x1;
+		
+		NVIC_SetPriority(TIMER5A_IRQn, 2);
+		NVIC_EnableIRQ(TIMER5A_IRQn);
+		
+		gp_timer->CTL |= (TIMER_CTL_TAEN);
+	}
+
 
 //*****************************************************************************
 // Starts Timer1.  

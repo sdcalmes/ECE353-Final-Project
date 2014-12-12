@@ -21,9 +21,11 @@ volatile int readingX;
 volatile int readingY;
 volatile int squares_caught;
 volatile int init_squares;
+volatile bool sendPackets;
 volatile bool joyStickUpdate;
 volatile bool matrixWrite;	
 int button;
+int packetsDropped = 0;
 uint8_t data;
 uint32_t up, down, left, right;
 int button_debounce(void);
@@ -42,6 +44,12 @@ void welcome_screen(void){
   lcd_write_string_10pts(2,"> Start");
 	
   while(1){
+		if(sendPackets){
+			sendPackets = false;
+			if(wireless_send_32(false,false,0) != NRF24L01_TX_SUCCESS){
+				packetsDropped++;
+			}
+		}
 		button = -1;
 		if(AlertSysTick){
 			data = GPIOF->DATA;
@@ -99,6 +107,12 @@ int start_screen(void){
 	lcd_write_string_10pts(2,"  Scores");
 	square(cursorPos, 5);
 	while(1){
+		if(sendPackets){
+			sendPackets = false;
+			if(wireless_send_32(false,false,0) != NRF24L01_TX_SUCCESS){
+				packetsDropped++;
+			}
+		}
 		button = -1;
 		if(AlertSysTick){
 			data = GPIOF->DATA;
@@ -226,6 +240,12 @@ float game1(void){
 	f14_timer1_Init(1);
 	//needs to start a count up timer right now.
 	while(1){
+		if(sendPackets){
+			sendPackets = false;
+			if(wireless_send_32(false,false,0) != NRF24L01_TX_SUCCESS){
+				packetsDropped++;
+			}
+		}
 		WATCHDOG0->ICR = 0;
 		if(matrixWrite){
 			matrixWrite = false;
@@ -404,6 +424,12 @@ float game2(void){
 	// start game timer
 	f14_timer1_Init(1);
 	while(1){
+		if(sendPackets){
+			sendPackets = false;
+			if(wireless_send_32(false,false,0) != NRF24L01_TX_SUCCESS){
+				packetsDropped++;
+			}
+		}
 		WATCHDOG0->ICR = 0;
 		x_data = xMiddle;
 		y_data = yMiddle;
@@ -527,6 +553,12 @@ float game3(void){
 	f14_timer1_Init(1);
 	//f14_timer0_start(1);
 		while(1){
+			if(sendPackets){
+			sendPackets = false;
+			if(wireless_send_32(false,false,0) != NRF24L01_TX_SUCCESS){
+				packetsDropped++;
+			}
+		}
 			WATCHDOG0->ICR = 0;
 			if(matrixWrite){
 				matrixWrite = false;

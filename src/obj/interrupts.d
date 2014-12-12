@@ -29,3 +29,4 @@
 .\obj\interrupts.o: wireless.h
 .\obj\interrupts.o: spi.h
 .\obj\interrupts.o: watchdog.h
+.\obj\interrupts.o: timers.h

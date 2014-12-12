@@ -1,0 +1,14 @@
+.\obj\recieve.o: recieve.c
+.\obj\recieve.o: recieve.h
+.\obj\recieve.o: wireless.h
+.\obj\recieve.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\recieve.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\obj\recieve.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123GH6PM.h
+.\obj\recieve.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm4.h
+.\obj\recieve.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h
+.\obj\recieve.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h
+.\obj\recieve.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmSimd.h
+.\obj\recieve.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h
+.\obj\recieve.o: spi.h
+.\obj\recieve.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\obj\recieve.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

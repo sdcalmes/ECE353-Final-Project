@@ -34,10 +34,11 @@
 #include "watchdog.h"
 #include "timers.h"
 #include "eeprom.h"
+#include "recieve.h"
 
 
 #define EEPROM_BYTES  4
-volatile bool AlertRX;
+//volatile bool AlertRX;
 
 /******************************************************************************
  * Global Variables
@@ -105,13 +106,8 @@ main(void)
 	int j = 1;
 	char toSend[2] = {0, 0};
 	bool winner = false;
-	bool recieved = false;
-	char recievedData[81];
-	char alt_recievedData[54];
-	uint32_t RX_status;
+	int recieved;
 	uint32_t TX_status;
-	int l = 0;
-	uint32_t rec_data;
 	f14_project_boardUtil();
 	lcd_initialize();
 	lcd_clear();
@@ -190,29 +186,7 @@ main(void)
 	game2time	= game2();
 	toSend[0] = (int)game2time;
 	string_to_send(toSend);
-	while(!recieved){
-		printf("Stuck in limbo\r");
-		WATCHDOG0->ICR = 1;
-	if(AlertRX){
-		printf("RX has been alerted\n");
-		RX_status = wireless_get_32(false, &rec_data);
-		if(RX_status ==NRF24L01_RX_SUCCESS){
-				recievedData[l] = rec_data;
-				alt_recievedData[l] = rec_data;
-				printf("SUCCESS\n");
-			if(recievedData[i] == 0){
-				printf("Recieved: %i\n",recievedData[0]);
-				i = 0;
-				memset(recievedData,0,81);
-				AlertRX = false;
-				recieved = true;
-			}
-			else{
-				i++;
-			}
-		}
-	}
-}		
+	recieved = recieve_data();
 
 	printf("Game 2 Time: %0.3f Seconds\n",game2time);
   game3time = game3();

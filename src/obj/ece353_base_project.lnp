@@ -17,6 +17,7 @@
 ".\obj\game.o"
 ".\obj\button_debounce.o"
 ".\obj\timers.o"
+".\obj\recieve.o"
 "..\lib\ece353_project.lib"
 ".\obj\startup_tm4c123.o"
 ".\obj\system_tm4c123.o"

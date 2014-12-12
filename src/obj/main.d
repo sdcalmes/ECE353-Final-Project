@@ -33,3 +33,4 @@
 .\obj\main.o: button_debounce.h
 .\obj\main.o: timers.h
 .\obj\main.o: eeprom.h
+.\obj\main.o: recieve.h

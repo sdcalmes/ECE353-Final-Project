@@ -31,9 +31,7 @@
 .\obj\game.o: graphics.h
 .\obj\game.o: io_expander.h
 .\obj\game.o: i2c.h
-.\obj\game.o: button_debounce.h
-.\obj\game.o: graphics.h
-.\obj\game.o: game.h
 .\obj\game.o: timers.h
 .\obj\game.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\obj\game.o: led_lut.h
 .\obj\game.o: eeprom.h

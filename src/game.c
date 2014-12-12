@@ -7,19 +7,26 @@
 #include "../include/adc.h"
 #include "graphics.h"
 #include "io_expander.h"
-#include "button_debounce.h"
+//#include "button_debounce.h"
 #include "timers.h"
 #include "math.h"
-//#include "led_lut.h"
+#include "led_lut.h"
 #include "eeprom.h"
 
+//volatile bool AlertSysTick;
 volatile bool AlertSysTick;
 volatile bool AlertADC0SS3;
 volatile bool AlertTIMER1A;
 volatile int readingX;
 volatile int readingY;
-extern volatile int squares_caught;
-extern volatile int init_squares;
+volatile int squares_caught;
+volatile int init_squares;
+volatile bool joyStickUpdate;
+volatile bool matrixWrite;	
+int button;
+uint8_t data;
+uint32_t up, down, left, right;
+int button_debounce(void);
 
 	//ROUNDING FUNCTION
 double roundF(float val){
@@ -62,17 +69,57 @@ double roundF(float val){
 //}
 
 void welcome_screen(void){
-	int button;
 
   lcd_write_string_10pts(0,"2 Player");
   lcd_write_string_10pts(1,"Speeeeed!!");
   lcd_write_string_10pts(2,"> Start");
 	
   while(1){
-		button = button_debounce();
+		button = -1;
+		if(AlertSysTick){
+			data = GPIOF->DATA;
+			if( (data & PA1) == 0)
+			{
+				up++;
+				if(up == 7)
+					button = 0;
+			}
+			else
+				up = 0;
+			
+			if( (data & PA4) == 0)
+			{
+				down++;
+				if(down == 7)
+					button = 3;
+					
+			}
+			else
+				down = 0;
+			
+			if( (data & PA2) == 0)
+			{
+				right++;
+				if(right == 7)
+					button = 1;
+			}
+			else
+				right = 0;
+			
+			if( (data & PA3) == 0)
+			{
+				left++;
+				if(left == 7)
+					button = 2;
+			}
+			else
+				left = 0;
+
+			AlertSysTick = false;
+		}
     if((button) == 1){
-      printf("YOLO\n");
-      lcd_clear();
+			button = -1;
+			lcd_clear();
       return;
     }
   }
@@ -80,13 +127,53 @@ void welcome_screen(void){
 
 int start_screen(void){
 	int cursorPos = 0;
-	int button;
 	lcd_write_string_10pts(0,"  Start");
 	lcd_write_string_10pts(1,"  Reset");
 	lcd_write_string_10pts(2,"  Scores");
 	square(cursorPos, 5);
 	while(1){
-	button = button_debounce();
+		button = -1;
+		if(AlertSysTick){
+			data = GPIOF->DATA;
+			if( (data & PA1) == 0)
+			{
+				up++;
+				if(up == 7)
+					button = 0;
+			}
+			else
+				up = 0;
+			
+			if( (data & PA4) == 0)
+			{
+				down++;
+				if(down == 7)
+					button = 3;
+					
+			}
+			else
+				down = 0;
+			
+			if( (data & PA2) == 0)
+			{
+				right++;
+				if(right == 7)
+					button = 1;
+			}
+			else
+				right = 0;
+			
+			if( (data & PA3) == 0)
+			{
+				left++;
+				if(left == 7)
+					button = 2;
+			}
+			else
+				left = 0;
+
+			AlertSysTick = false;
+		}
 		if(button == 0){
 			rm_square(cursorPos, 5);
 			if(cursorPos == 2){
@@ -109,7 +196,7 @@ int start_screen(void){
 			square(cursorPos, 5);
 		}
 		
-		if((GPIOF->DATA & PF2) == 0){
+		if(button == 1){
 			return cursorPos;
 		}
 }
@@ -132,7 +219,6 @@ void reset_scores(void){
 //*******************************************
 float game1(void){
 	int i;
-	int button;
 	int rand_page;
 	int rand_col;
 	float ticks;
@@ -170,12 +256,54 @@ float game1(void){
 		//needs to start a count up timer right now.
 	while(1){
 		WATCHDOG0->ICR = 0;
-//		if(AlertSysTick){
-//			AlertSysTick = false;
-//			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[4-squares_caught][col]);
-//			col++;
-//			col = col % 5;
-//		}
+		if(matrixWrite){
+			matrixWrite = false;
+			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[4-squares_caught][col]);
+			col++;
+			col = col % 5;
+		}
+				button = -1;
+		if(AlertSysTick){
+			data = GPIOF->DATA;
+			if( (data & PA1) == 0)
+			{
+				up++;
+				if(up == 7)
+					button = 0;
+			}
+			else
+				up = 0;
+			
+			if( (data & PA4) == 0)
+			{
+				down++;
+				if(down == 7)
+					button = 3;
+					
+			}
+			else
+				down = 0;
+			
+			if( (data & PA2) == 0)
+			{
+				right++;
+				if(right == 7)
+					button = 1;
+			}
+			else
+				right = 0;
+			
+			if( (data & PA3) == 0)
+			{
+				left++;
+				if(left == 7)
+					button = 2;
+			}
+			else
+				left = 0;
+
+			AlertSysTick = false;
+		}
 		//write to eeprom
 //		for(i = 0; i < EEPROM_BYTES; i++){
 //			eeprom_byte_write(I2C_I2C_BASE,i,write_data[i]);
@@ -185,7 +313,6 @@ float game1(void){
 			gp_timer->ICR = 1;
 			seconds++;
 		}
-		button = button_debounce();
 		switch(button){
 			case 0:
 				rm_square(square_curr_page,square_curr_col);
@@ -306,12 +433,14 @@ float game2(void){
 	f14_timer1_Init(1);
 	while(1){
 		WATCHDOG0->ICR = 0;
-//		if(AlertSysTick){
-//			AlertSysTick = false;
-//			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[4-squares_caught][col]);
-//			col++;
-//			col = col % 5;
-//		}
+		x_data = xMiddle;
+		y_data = yMiddle;
+		if(matrixWrite){
+			matrixWrite = false;
+			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[4-squares_caught][col]);
+			col++;
+			col = col % 5;
+		}
 		
 		if(gp_timer->RIS == 1){
 			gp_timer->ICR = 1;
@@ -320,13 +449,15 @@ float game2(void){
 		//printf("RIS: %i\tSeconds: %i\n",gp_timer->TAV, seconds);
 		
 		//basically use it as a digital device...
-		if(AlertADC0SS3){
+		if(joyStickUpdate){
 			x_data = (readingX/0x28);
 			y_data = (readingY/0x1a2);
+			//printf("XMid: 0x%02x\tXNow: 0x%02x\n",xMiddle,x_data);
+			joyStickUpdate = false;
 		}
 
 //		printf("X Dir: 0x%02x\tY Dir: 0x%02x\r",((x_data)),((y_data)));
-		for(i=0;i<700000; i++){};
+	//	for(i=0;i<700000; i++){};
 			
 		if(x_data < xMiddle){
 				rm_square(square_curr_page,square_curr_col);
@@ -412,7 +543,6 @@ float game3(void){
 	int col = 0;
 	int colFinished = 0;
 	int i;
-	int button;
 	float ticks;
 	float mHz = 50000000;
 	int seconds = 0;
@@ -432,20 +562,60 @@ float game3(void){
 	//f14_timer0_start(1);
 		while(1){
 			WATCHDOG0->ICR = 0;
-//			if(AlertSysTick){
-//				AlertSysTick = false;
-//				ledMatrixWriteData(I2C_I2C_BASE, colLED, Led_LUT[rows-colFinished][colLED]);
-//				colLED++;
-//				colLED = colLED % 5;
-//		}
+			if(matrixWrite){
+				matrixWrite = false;
+				ledMatrixWriteData(I2C_I2C_BASE, colLED, Led_LUT[init_squares-squares_caught][colLED]);
+				colLED++;
+				colLED = colLED % 5;
+		}
+					button = -1;
+		if(AlertSysTick){
+			data = GPIOF->DATA;
+			if( (data & PA1) == 0)
+			{
+				up++;
+				if(up == 7)
+					button = 0;
+			}
+			else
+				up = 0;
 			
+			if( (data & PA4) == 0)
+			{
+				down++;
+				if(down == 7)
+					button = 3;
 					
+			}
+			else
+				down = 0;
+			
+			if( (data & PA2) == 0)
+			{
+				right++;
+				if(right == 7)
+					button = 1;
+			}
+			else
+				right = 0;
+			
+			if( (data & PA3) == 0)
+			{
+				left++;
+				if(left == 7)
+					button = 2;
+			}
+			else
+				left = 0;
+
+			AlertSysTick = false;
+		}
+						
 		if(gp_timer->RIS == 1){
 			gp_timer->ICR = 1;
 			seconds++;
 		}
 		//	printf("\nCurrTicks: %f\r", timer0_get_ticks());
-			button = button_debounce();
 			if(button == 0){
 				page = (buttonPresses % 8);
 				fill_region(page,col);

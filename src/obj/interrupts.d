@@ -29,4 +29,3 @@
 .\obj\interrupts.o: wireless.h
 .\obj\interrupts.o: spi.h
 .\obj\interrupts.o: watchdog.h
-.\obj\interrupts.o: led_lut.h

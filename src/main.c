@@ -88,8 +88,9 @@ main(void)
 	f14_project_boardUtil();
 	lcd_initialize();
 	lcd_clear();
-			f14_timer0_Init();
-
+		f14_timer0_Init();
+	f14_timer4_Init();
+	f14_timer3_Init();
   // Infinite Loop
   while(1){
 		
@@ -109,11 +110,10 @@ main(void)
 	int i = 0;
   int k = 0;
 	int j = 0;
-		TIMER0_Type *gp_timer;
-	gp_timer = (TIMER0_Type *) TIMER0_BASE;
+//		TIMER0_Type *gp_timer;
+//	gp_timer = (TIMER0_Type *) TIMER2_BASE;
 		f14_timer2_Init();
-
-//		f14_timer3_Init();
+	//	f14_timer3_Init();
 //	printf("SEC: %i\n", j*5);
 		//read data
 		for(i = 0; i < EEPROM_BYTES; i++){
@@ -135,6 +135,9 @@ main(void)
 		printf("*********************************\n\n");
 
 	memset(initials,0,3);
+	lcd_write_string_10pts(0,"Put");
+	lcd_write_string_10pts(1,"Initials");
+	lcd_write_string_10pts(2,"In Console");
 	printf("Set your initials for high scores (3 chars please): ");
   scanf("%80[^\n]", initials);
 	printf("Press right button to begin!\n");
@@ -149,7 +152,6 @@ main(void)
 	if(resetScores){
 		reset_scores();
 	}
-	SysTick_Config(250000);
 
 	game1time = game1();//	
 	printf("Game 1 Time: %0.3f Seconds\n",game1time);

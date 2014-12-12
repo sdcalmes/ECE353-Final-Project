@@ -541,6 +541,7 @@ void f14_timer1_start(uint32_t count);
 
 void f14_timer2_Init(void);
 void f14_timer3_Init(void);
+void f14_timer4_Init(void);
 
 //*****************************************************************************
 // Stops Timer1

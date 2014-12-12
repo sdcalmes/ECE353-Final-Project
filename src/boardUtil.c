@@ -27,6 +27,7 @@ void f14_project_boardUtil(void){
 	i2cInit();
 	rf_init();
 	wireless_configure_device(myID, remoteID);
+		SysTick_Config(250000);
 	EnableInterrupts();
 	
 	printf("\n\n\n\r*********************************\n\r");

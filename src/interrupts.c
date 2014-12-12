@@ -5,7 +5,6 @@
 #include "../include/eadogs102w.h"
 #include "io_expander.h"
 #include "boardUtil.h"
-#include "led_lut.h"
 
 extern PC_Buffer UART0_Rx_Buffer;
 extern PC_Buffer UART0_Tx_Buffer;
@@ -14,9 +13,10 @@ extern volatile bool AlertADC0SS3;
 extern volatile bool AlertTIMER1A;
 extern volatile int readingX;
 extern volatile int readingY;
-volatile int squares_caught;
-volatile int init_squares;
-int packets_received, packets_lost;
+extern volatile bool matrixWrite;
+extern volatile bool joyStickUpdate;
+int packets_received;
+int packets_lost;
 int col = 0;
 
 //*****************************************************************************
@@ -77,12 +77,12 @@ void SysTick_Handler(void)
  
    // Alert the main application the SysTick Timer has expired
    AlertSysTick = true;
- 		if(AlertSysTick){
-			AlertSysTick = false;
-			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[init_squares-squares_caught][col]);
-			col++;
-			col = col % 5;
-		}
+// 		if(AlertSysTick){
+//			AlertSysTick = false;
+//			ledMatrixWriteData(I2C_I2C_BASE, col, Led_LUT[init_squares-squares_caught][col]);
+//			col++;
+//			col = col % 5;
+//		}
    // Clears the SysTick Interrupt
    val = SysTick->VAL;
 }
@@ -138,33 +138,49 @@ void WDT0_Handler(void){
 }
 
 void TIMER0A_Handler(void){
-		TIMER0_Type *gp_timer;
+	TIMER0_Type *gp_timer;
 	gp_timer = (TIMER0_Type *) TIMER0_BASE;
-
 	printf("Packets Received: %i\tPackets Lost: %i\n",packets_received, packets_lost);
-		gp_timer->ICR = 1;
+	gp_timer->ICR = 1;
 	
 }
 
-void SSI1_Handler(void){
-	char input[81];
-  uint32_t data;
-  uint32_t status;
-  int i = 0;
-	  // Check if any packets have been received
-  status =  wireless_get_32(false, &data);
-  if(status == NRF24L01_RX_SUCCESS)
-  {
-    input[i] = (char)data;
-    if( input[i] == 0)
-    {
-      printf("Received: %s\n\r", input);
-      i = 0;
-      memset(input,0,81);
-    }
-    else
-    {
-      i++;
-    }
-  }
+//matrix timer
+void TIMER3A_Handler(void){
+	TIMER0_Type *gp_timer;
+	gp_timer = (TIMER0_Type *) TIMER3_BASE;
+	gp_timer->ICR = 1;
+	matrixWrite = true;
+	
 }
+
+//joystick timer
+void TIMER4A_Handler(void){
+	TIMER0_Type *gp_timer;
+	gp_timer = (TIMER0_Type *) TIMER4_BASE;
+	gp_timer->ICR = 1;
+	joyStickUpdate = true;
+}
+
+//void SSI1_Handler(void){
+//	char input[81];
+//  uint32_t data;
+//  uint32_t status;
+//  int i = 0;
+//	  // Check if any packets have been received
+//  status =  wireless_get_32(false, &data);
+//  if(status == NRF24L01_RX_SUCCESS)
+//  {
+//    input[i] = (char)data;
+//    if( input[i] == 0)
+//    {
+//      printf("Received: %s\n\r", input);
+//      i = 0;
+//      memset(input,0,81);
+//    }
+//    else
+//    {
+//      i++;
+//    }
+//  }
+//}

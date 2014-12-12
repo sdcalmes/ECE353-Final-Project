@@ -156,7 +156,11 @@ main(void)
 //		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[3], hs_numbers[3]);
 //		printf("* Game 1 Initials: %d\tTime: %d\n",hs_names[4], hs_numbers[4]);
 		printf("*********************************\n\n");
-
+		input[0] = 5;
+		input[1] = 0;
+	string_to_send(input);
+	recieved = recieve_data();
+		printf("RECeived: %i\n",recieved);
 	memset(initials,0,3);
 	lcd_write_string_10pts(0,"Put");
 	lcd_write_string_10pts(1,"Initials");

@@ -15,6 +15,7 @@ extern volatile int readingX;
 extern volatile int readingY;
 extern volatile bool matrixWrite;
 extern volatile bool joyStickUpdate;
+extern volatile bool AlertRX;
 int packets_received;
 int packets_lost;
 int col = 0;
@@ -162,25 +163,7 @@ void TIMER4A_Handler(void){
 	joyStickUpdate = true;
 }
 
-//void SSI1_Handler(void){
-//	char input[81];
-//  uint32_t data;
-//  uint32_t status;
-//  int i = 0;
-//	  // Check if any packets have been received
-//  status =  wireless_get_32(false, &data);
-//  if(status == NRF24L01_RX_SUCCESS)
-//  {
-//    input[i] = (char)data;
-//    if( input[i] == 0)
-//    {
-//      printf("Received: %s\n\r", input);
-//      i = 0;
-//      memset(input,0,81);
-//    }
-//    else
-//    {
-//      i++;
-//    }
-//  }
-//}
+void GPIOD_Handler(void){
+	AlertRX = true;
+	GPIOD->ICR |= PD7;
+}

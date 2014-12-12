@@ -121,6 +121,7 @@ void joyStickInit(void)
 //*****************************************************************************
 void rf_init(void)
 {
+	GPIOA_Type *gpioPort;
   wireless_set_pin_config(
     RF_SPI_BASE,
     RF_PAYLOAD_SIZE,
@@ -158,7 +159,22 @@ void rf_init(void)
   gpio_config_digital_enable(RF_CE_GPIO_BASE,RF_CE_PIN);
   gpio_config_enable_output(RF_CE_GPIO_BASE,RF_CE_PIN);
   
-  
+  // Enable RF Interrupts
+  gpio_enable_port(RF_IRQ_GPIO_BASE);
+  gpio_config_digital_enable(RF_IRQ_GPIO_BASE,RF_IRQ_PIN);
+	gpio_config_enable_input(RF_IRQ_GPIO_BASE,RF_IRQ_PIN);
+	
+	gpioPort = (GPIOA_Type *)RF_IRQ_GPIO_BASE;
+	gpioPort->IM = 0x00;
+	gpioPort->IS &= (0 << 7);
+	gpioPort->IBE &= (0 << 7);
+	gpioPort->IEV &= (0 << 7);
+	gpioPort->ICR = RF_IRQ_PIN;
+	gpioPort->IM = RF_IRQ_PIN;
+	
+	NVIC_SetPriority(GPIOD_IRQn,1);
+	NVIC_EnableIRQ(GPIOD_IRQn);
+	
   initialize_spi(RF_SPI_BASE, 0);
     
   RF_CE_PERIH->DATA |= (1 << 1);

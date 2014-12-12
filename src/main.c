@@ -37,6 +37,7 @@
 
 
 #define EEPROM_BYTES  4
+volatile bool AlertRX;
 
 /******************************************************************************
  * Global Variables
@@ -77,6 +78,24 @@ bool lose_or_win(float total_time, bool master){
 		}
 }
 
+//Send data to other board
+wireless_com_status_t string_to_send(char input[]){
+	char sent_input[81];
+	int i;
+	wireless_com_status_t TX_status;
+	strcpy( sent_input, input );
+	
+	i = 0;
+	while(sent_input[i] != 0)
+	{
+		TX_status = wireless_send_32(false, false, sent_input[i]);
+		i++;
+	}
+	TX_status = wireless_send_32(false, false, 0);
+	
+	return TX_status;
+}
+
 int 
 main(void)
 {
@@ -84,7 +103,14 @@ main(void)
 	int resetScores;
 	int button;
 	int j = 1;
+	char toSend[2] = {0, 0};
 	bool winner = false;
+	char recievedData[81];
+	char alt_recievedData[54];
+	uint32_t RX_status;
+	uint32_t TX_status;
+	int l = 0;
+	uint32_t rec_data;
 	f14_project_boardUtil();
 	lcd_initialize();
 	lcd_clear();
@@ -153,17 +179,43 @@ main(void)
 		reset_scores();
 	}
 
-	game1time = game1();//	
+	game1time = game1();//
+	toSend[0] = (int)game1time;
+	string_to_send(toSend);
 	printf("Game 1 Time: %0.3f Seconds\n",game1time);
 	//send my game 1 time, receive game 1 time, and say who is the winner.
 	//have a running tally of wins.
 //	print_ps2();
 	game2time	= game2();
+	toSend[0] = (int)game2time;
+	if(AlertRX){
+		RX_status = wireless_get_32(false, &rec_data);
+		if(RX_status ==NRF24L01_RX_SUCCESS){
+				recievedData[l] = rec_data;
+				alt_recievedData[l] = rec_data;
+				
+			if(recievedData[i] == 0){
+				printf("Recieved: %i\n",recievedData[0]);
+				i = 0;
+				memset(recievedData,0,81);
+				AlertRX = false;
+			}
+			else{
+				i++;
+			}
+		}
+	}
+			
+	string_to_send(toSend);
 	printf("Game 2 Time: %0.3f Seconds\n",game2time);
   game3time = game3();
+	toSend[0] = (int)game3time;
+	string_to_send(toSend);
 	printf("Game 3 Time: %0.3f Seconds\n",game3time);
 	
 	total_time = game1time + game2time + game3time;
+	toSend[0] = (int)game1time;
+	string_to_send(toSend);
 	avg_time = total_time / 3;
 	printf("Total Time: %0.3f Seconds\n",total_time);
 	printf("Average Time: %0.3f Seconds\n",avg_time);
